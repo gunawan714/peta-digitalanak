@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Peta Perlindungan Anak Banten | Panic Button & Darurat</title>
+    <title>Peta Perlindungan Anak Banten | Aman untuk Anak</title>
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Google Fonts: ramah anak & ceria -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (gratis, ikon ceria) -->
+    <!-- Font Awesome 6 (gratis, ceria) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -19,466 +17,478 @@
         }
 
         body {
-            font-family: 'Quicksand', 'Poppins', sans-serif;
-            background: linear-gradient(145deg, #FFF9E8 0%, #FFEFD6 100%);
-            color: #2D2A24;
-            padding: 16px 12px 32px 12px;
+            font-family: 'Segoe UI', 'Poppins', 'Comic Neue', 'Quicksand', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #fff9e8 0%, #ffe6c9 100%);
+            color: #2c3e2f;
+            padding: 20px 16px 30px;
         }
 
-        /* Container utama mobile friendly */
+        /* kontainer utama */
         .app-container {
-            max-width: 550px;
+            max-width: 580px;
             margin: 0 auto;
-            background: rgba(255, 255, 245, 0.9);
-            border-radius: 48px 48px 40px 40px;
-            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(2px);
+            border-radius: 48px 48px 40px 40px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1), 0 5px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 18px 18px 24px;
+            transition: all 0.2s ease;
         }
 
-        /* Header ceria */
-        .hero {
-            background: #FFB74D;
-            padding: 24px 20px 20px 20px;
-            text-align: center;
-            border-bottom-left-radius: 32px;
-            border-bottom-right-radius: 32px;
-            box-shadow: 0 8px 14px rgba(0,0,0,0.05);
-        }
-        .hero h1 {
+        h1 {
             font-size: 1.9rem;
-            font-weight: 800;
-            color: #2C3A2B;
+            text-align: center;
+            background: linear-gradient(135deg, #F97316, #F59E0B);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
             letter-spacing: -0.3px;
-            text-shadow: 3px 3px 0 #FFE0A3;
-        }
-        .hero p {
-            font-size: 0.9rem;
-            font-weight: 600;
-            background: #FFE8C5;
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 60px;
-            margin-top: 12px;
-            color: #A55700;
-        }
-
-        /* Panel tombol aksi */
-        .action-buttons {
-            display: flex;
-            gap: 14px;
-            padding: 20px 20px 12px 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .btn-panic, .btn-share {
-            flex: 1;
-            min-width: 140px;
-            border: none;
-            padding: 14px 8px;
-            border-radius: 60px;
-            font-weight: 800;
-            font-size: 1.2rem;
-            font-family: 'Quicksand', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        h1 i {
+            background: none;
+            color: #f97316;
+            font-size: 2rem;
+        }
+        .sub {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #b45309;
+            background: #ffedd5;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 15px;
+            padding: 6px 14px;
+            border-radius: 60px;
+            font-weight: 600;
+        }
+
+        /* map styling */
+        .map-wrapper {
+            background: #cbd5e1;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin: 12px 0 18px;
+            border: 3px solid #ffd966;
+        }
+        #childMap {
+            height: 320px;
+            width: 100%;
+            background: #f5f0e0;
+        }
+        .btn-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin: 15px 0 12px;
+        }
+        .btn-panic, .btn-share {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 100px;
+            font-weight: bold;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: 0.2s ease;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
             box-shadow: 0 5px 0 rgba(0,0,0,0.1);
         }
         .btn-panic {
-            background: #FF5252;
+            background-color: #e11d48;
             color: white;
-            border-bottom: 3px solid #B71C1C;
+            flex: 1;
+            justify-content: center;
         }
-        .btn-panic:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.1);}
+        .btn-panic i { font-size: 1.3rem; }
         .btn-share {
-            background: #25D366;
+            background-color: #25D366;
             color: white;
-            border-bottom: 3px solid #075E54;
+            flex: 1;
+            justify-content: center;
         }
-        .btn-share:active { transform: translateY(2px);}
-        .btn-panic i, .btn-share i { font-size: 1.4rem; }
-
-        /* Peta */
-        .map-wrapper {
-            margin: 8px 16px 16px 16px;
-            border-radius: 36px;
-            overflow: hidden;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-            border: 3px solid #FFD966;
-        }
-        #childMap {
-            height: 380px;
-            width: 100%;
-            background: #cbe5fe;
-        }
-
-        /* Keterangan dan SOP + Lembaga */
-        .info-section {
-            padding: 12px 20px 28px 20px;
-        }
-        .card-info {
-            background: #FFFFFFCC;
-            backdrop-filter: blur(4px);
-            border-radius: 32px;
-            padding: 18px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
-            border: 1px solid #FFE3B5;
-        }
-        .card-info h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #F57C00;
-            border-left: 8px solid #FFB74D;
-            padding-left: 12px;
-            margin-bottom: 16px;
+        .btn-share i { font-size: 1.3rem; }
+        .btn-panic:active, .btn-share:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.1);}
+        
+        .emergency-buttons {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            gap: 16px;
+            margin: 12px 0 20px;
+            flex-wrap: wrap;
         }
-        .sop-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        .sop-item {
-            background: #FFF6E8;
+        .emergency-card {
+            flex: 1;
+            background: #fff1e6;
             border-radius: 28px;
-            padding: 12px 16px;
-            transition: 0.1s;
+            text-align: center;
+            padding: 12px 8px;
+            text-decoration: none;
+            color: #2c2b2a;
+            font-weight: bold;
+            transition: all 0.2s;
+            border: 1px solid #fbc4ab;
+            backdrop-filter: blur(4px);
         }
-        .sop-item strong {
-            color: #E65100;
+        .emergency-card i {
+            font-size: 1.8rem;
             display: block;
-            font-size: 1rem;
             margin-bottom: 6px;
         }
-        .sop-item p {
-            font-size: 0.85rem;
-            line-height: 1.4;
-            color: #2c2b28;
+        .emergency-card span {
+            font-size: 0.9rem;
         }
-        .lembaga-grid {
+        .call129 { background: #ffd966; border-color: #e6a017; color: #7b2e00; }
+        .wa-emergency { background: #c8e6d9; border-color: #2e7d32; color: #1c5e1f; }
+
+        /* info sections */
+        .info-section {
+            background: #fef9e6;
+            border-radius: 32px;
+            padding: 16px 20px;
+            margin: 18px 0 12px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+        .info-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-left: 8px solid #f97316;
+            padding-left: 14px;
+            margin-bottom: 16px;
+            color: #a35100;
+        }
+        .sop-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .sop-item {
+            background: #fff5e8;
+            border-radius: 24px;
+            padding: 12px 18px;
+            border: 1px solid #ffe0b5;
+        }
+        .sop-item h3 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e67e22;
+            margin-bottom: 10px;
+        }
+        .sop-item p {
+            color: #3c2a1f;
+            line-height: 1.45;
+            font-size: 0.9rem;
+        }
+        .ref-list {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin: 10px 0 8px;
+            margin-top: 8px;
         }
-        .lembaga-badge {
-            background: #FCE4B2;
-            padding: 10px 14px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #A55300;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .emergency-number {
-            background: #FFE0A3;
-            border-radius: 48px;
-            padding: 14px 18px;
-            margin-top: 12px;
-            text-align: center;
-            border: 2px solid #F9A825;
-        }
-        .emergency-number p {
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: #BF360C;
-        }
-        .emergency-number span {
-            font-size: 1.6rem;
-            letter-spacing: 1px;
-            font-weight: 900;
-            background: white;
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 50px;
-            margin-top: 6px;
-        }
-        .footer-note {
-            text-align: center;
-            font-size: 0.7rem;
-            padding: 10px;
-            color: #9B7B4C;
-        }
-        i.fa, i.far, i.fas {
-            pointer-events: none;
-        }
-        /* responsive kecil */
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 1.5rem; }
-            .btn-panic, .btn-share { font-size: 1rem; padding: 12px; }
-            #childMap { height: 320px; }
-        }
-        .toast-msg {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: white;
-            padding: 8px 18px;
+        .ref-badge {
+            background: #ffe2bf;
             border-radius: 40px;
-            font-size: 0.8rem;
-            z-index: 1000;
-            background: #F57C00;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #a34300;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 12px;
+            border-top: 2px dashed #fbc48f;
+            font-size: 0.75rem;
+            color: #ac6f3c;
+            font-weight: 500;
+        }
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .btn-panic, .btn-share { font-size: 0.9rem; padding: 10px 16px;}
+            .emergency-card i { font-size: 1.5rem; }
+            .info-title { font-size: 1.2rem; }
+        }
+        .leaflet-popup-content {
+            font-size: 0.9rem;
             font-weight: bold;
-            pointer-events: none;
-            opacity: 0;
-            transition: 0.2s;
+            color: #e65c1e;
+        }
+        button {
+            background: none;
+            border: none;
+        }
+        .note-loc {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 6px;
+            color: #e07c2c;
         }
     </style>
 </head>
 <body>
 <div class="app-container">
-    <div class="hero">
-        <h1>🧸 PETA PERLINDUNGAN ANAK BANTEN</h1>
-        <p><i class="fas fa-shield-heart"></i> Satu klik, segera aman</p>
-    </div>
+    <h1>
+        <i class="fas fa-map-marked-alt"></i> 
+        PETA PERLINDUNGAN ANAK BANTEN
+        <i class="fas fa-child"></i>
+    </h1>
+    <div style="text-align: center;"><span class="sub"><i class="fas fa-shield-heart"></i> Aman & Ramah Anak</span></div>
 
-    <!-- Tombol Aksi Utama -->
-    <div class="action-buttons">
-        <button id="panicBtn" class="btn-panic"><i class="fas fa-exclamation-triangle"></i> PANIC BUTTON</button>
-        <button id="shareWaBtn" class="btn-share"><i class="fab fa-whatsapp"></i> SHARE LOKASI</button>
-    </div>
-
-    <!-- Peta Provinsi Banten (8 Kab/Kota) -->
+    <!-- Peta -->
     <div class="map-wrapper">
         <div id="childMap"></div>
     </div>
 
-    <!-- Bagian Edukasi & SOP + Lembaga Rujukan -->
-    <div class="info-section">
-        <div class="card-info">
-            <h3><i class="fas fa-clinic-medical"></i> SOP & LANGKAH SELAMAT</h3>
-            <div class="sop-list">
-                <div class="sop-item">
-                    <strong>🔴 Kekerasan Seksual</strong>
-                    <p>1. Segera menjauh ke tempat aman 🏃‍♀️<br>2. Jangan mandi/ganti baju sebelum pendampingan medis 🩺<br>3. Laporkan ke orang dewasa terpercaya atau call center 129 📞<br>4. Hubungi UPTD PPA terdekat untuk pendampingan psikologis.</p>
-                </div>
-                <div class="sop-item">
-                    <strong>✊ Kekerasan Fisik</strong>
-                    <p>1. Cari tempat ramai dan aman 🛡️<br>2. Dokumentasikan luka (foto / catatan) 📸<br>3. Laporkan ke guru atau kepala desa, dan segera ke Unit PPA Polres 🚓<br>4. Minta pendampingan dari PATBM setempat.</p>
-                </div>
-                <div class="sop-item">
-                    <strong>💔 Bullying / Perundungan</strong>
-                    <p>1. Katakan “STOP” dengan tegas 🛑<br>2. Catat waktu, tempat, dan pelaku ✍️<br>3. Ceritakan pada orang tua / sahabat, jangan diam! 🗣️<br>4. Hubungi Forum Anak atau konselor sekolah untuk mediasi.</p>
-                </div>
-                <div class="sop-item">
-                    <strong>🤝 Kekerasan Lainnya (psikis/penelantaran)</strong>
-                    <p>• Hubungi Psikolog atau Sahabat Anak 129 💬<br>• Laporkan ke Komnas Perlindungan Anak atau Dinas Sosial<br>• Jangan takut bicara, kamu berhak dilindungi.</p>
-                </div>
-            </div>
-        </div>
+    <!-- Tombol Panic + Share Lokasi WA -->
+    <div class="btn-panel">
+        <button id="panicButton" class="btn-panic"><i class="fas fa-bell"></i> PANIC BUTTON 🚨</button>
+        <button id="shareWABtn" class="btn-share"><i class="fab fa-whatsapp"></i> Share Lokasi via WA</button>
+    </div>
+    <div class="note-loc"><i class="fas fa-map-pin"></i> Klik PANIC → muncul titik merah di lokasi HP-mu di peta!</div>
 
-        <div class="card-info">
-            <h3><i class="fas fa-hand-holding-heart"></i> LEMBAGA RUJUKAN & DARURAT</h3>
-            <div class="lembaga-grid">
-                <div class="lembaga-badge"><i class="fas fa-balance-scale"></i> Komnas Perlindungan Anak</div>
-                <div class="lembaga-badge"><i class="fas fa-female"></i> UPTD PPA Banten</div>
-                <div class="lembaga-badge"><i class="fas fa-building-shield"></i> Unit PPA Polres/Polda</div>
-                <div class="lembaga-badge"><i class="fas fa-users"></i> PATBM (Perlindungan Anak Terpadu Berbasis Masyarakat)</div>
-                <div class="lembaga-badge"><i class="fas fa-child"></i> Forum Anak Daerah Banten</div>
-                <div class="lembaga-badge"><i class="fas fa-phone-alt"></i> Sahabat Anak & Psikolog</div>
+    <!-- Tombol darurat 129 & WA Darurat -->
+    <div class="emergency-buttons">
+        <a href="tel:129" class="emergency-card call129">
+            <i class="fas fa-phone-alt"></i>
+            <span>📞 129 (Hotline Darurat)</span>
+        </a>
+        <a href="https://wa.me/628111129129?text=Halo%2C%20saya%20membutuhkan%20bantuan%20perlindungan%20anak%20di%20Banten.%20Mohon%20bantuannya." target="_blank" class="emergency-card wa-emergency">
+            <i class="fab fa-whatsapp"></i>
+            <span>WhatsApp 08111129129</span>
+        </a>
+    </div>
+
+    <!-- SOP & Langkah Keselamatan -->
+    <div class="info-section">
+        <div class="info-title"><i class="fas fa-clipboard-list"></i> 📋 Langkah & SOP Keselamatan Anak</div>
+        <div class="sop-grid">
+            <div class="sop-item">
+                <h3><i class="fas fa-hand-peace"></i> Kekerasan Seksual</h3>
+                <p>1. Jangan takut & jangan mandi dulu (jaga bukti). 2. Segera cerita ke orang dewasa terpercaya. 3. Laporkan ke UPTD PPA atau polisi (Unit PPA). 4. Hubungi hotline 129. 5. Dapatkan pendampingan psikologis.</p>
             </div>
-            <div class="emergency-number">
-                <p><i class="fas fa-life-ring"></i> Panggil Darurat 24 Jam</p>
-                <span>📞 129</span>
-                <span style="font-size:1rem; background:#E6F7E6;">📱 WA 0811-1129-129</span>
-                <p style="font-size:0.7rem; margin-top:8px;">Bebas pulsa · Perlindungan penuh</p>
+            <div class="sop-item">
+                <h3><i class="fas fa-fist-raised"></i> Kekerasan Fisik</h3>
+                <p>1. Menjauh dari pelaku, cari tempat aman. 2. Dokumentasikan luka (foto). 3. Laporkan ke guru atau PATBM setempat. 4. Hubungi Komnas Perlindungan Anak atau UPTD PPA.</p>
             </div>
-        </div>
-        <div class="footer-note">
-            <i class="fas fa-map-marker-alt"></i> Klik PANIC → titik merah muncul di lokasimu! Bagikan via WA untuk bantuan cepat.
+            <div class="sop-item">
+                <h3><i class="fas fa-comment-dots"></i> Bullying / Perundungan</h3>
+                <p>1. Katakan "STOP" dengan tegas. 2. Simpan bukti pesan atau video. 3. Minta bantuan teman atau orang dewasa. 4. Laporkan ke pihak sekolah & Forum Anak. 5. Konseling melalui 129.</p>
+            </div>
+            <div class="sop-item">
+                <h3><i class="fas fa-heart-broken"></i> Kekerasan Lainnya</h3>
+                <p>Lindungi diri, cari perlindungan ke tetangga / kantor desa. Hubungi UPTD PPA terdekat. Aktivasi PATBM (Perlindungan Anak Terpadu Berbasis Masyarakat) & segera hubungi 08111129129.</p>
+            </div>
         </div>
     </div>
+
+    <!-- Lembaga Rujukan -->
+    <div class="info-section">
+        <div class="info-title"><i class="fas fa-building"></i> 🤝 Lembaga Rujukan Perlindungan Anak</div>
+        <div class="ref-list">
+            <span class="ref-badge"><i class="fas fa-gavel"></i> Komnas Perlindungan Anak</span>
+            <span class="ref-badge"><i class="fas fa-female"></i> UPTD PPA Banten</span>
+            <span class="ref-badge"><i class="fas fa-shield-virus"></i> Unit PPA Polres/Polda</span>
+            <span class="ref-badge"><i class="fas fa-hand-holding-heart"></i> PATBM</span>
+            <span class="ref-badge"><i class="fas fa-users"></i> Forum Anak Daerah</span>
+            <span class="ref-badge"><i class="fas fa-school"></i> Dinas PPPA Provinsi Banten</span>
+        </div>
+        <p style="margin-top: 16px; font-size: 0.85rem; background: #fff0dc; border-radius: 20px; padding: 10px;"><i class="fas fa-info-circle"></i> <strong>Layanan 24 jam:</strong> Hubungi 129 (KPAI/SAPA129) atau WhatsApp 08111129129 untuk konseling & tindak cepat. Semua lembaga siap dampingi anak korban kekerasan.</p>
+    </div>
+
+    <footer>
+        <i class="fas fa-star-of-life"></i> Aplikasi ini dipersembahkan oleh Komnas Perlindungan Anak Provinsi Banten <i class="fas fa-seedling"></i><br>
+        #AnakBantenBerlindung #StopKekerasan
+    </footer>
 </div>
-<div id="toastMsg" class="toast-msg">✨ Titik merah darurat telah ditambahkan!</div>
 
 <script>
-    // ======================== INISIALISASI PETA ========================
-    // Koordinat tengah Provinsi Banten (cover 8 kab/kota)
-    const bantenCenter = [-6.28, 106.22];
-    const map = L.map('childMap').setView(bantenCenter, 9);
-
-    // Tile layer OSM yang ramah & jelas
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> & CartoDB',
-        subdomains: 'abcd',
-        maxZoom: 18,
-        minZoom: 7
-    }).addTo(map);
-
-    // Data 8 Kabupaten/Kota di Banten + koordinat (pusat kota)
-    const kotaBanten = [
-        { name: "Kota Serang", lat: -6.1206, lng: 106.1503, type: "Kota" },
-        { name: "Kabupaten Serang", lat: -6.2710, lng: 106.1840, type: "Kabupaten" },
-        { name: "Kota Cilegon", lat: -6.0025, lng: 106.0112, type: "Kota" },
-        { name: "Kota Tangerang", lat: -6.1783, lng: 106.6319, type: "Kota" },
-        { name: "Kabupaten Tangerang", lat: -6.2829, lng: 106.4710, type: "Kabupaten" },
-        { name: "Kota Tangerang Selatan", lat: -6.2886, lng: 106.7175, type: "Kota" },
-        { name: "Kabupaten Lebak", lat: -6.6620, lng: 106.2000, type: "Kabupaten" },
-        { name: "Kabupaten Pandeglang", lat: -6.4356, lng: 105.9965, type: "Kabupaten" }
+    // --------------------------------------------------------------
+    // DATA KOORDINAT 8 KABUPATEN/KOTA PROVINSI BANTEN (berdasarkan titik tengah dari koordinat yang diberikan)
+    // --------------------------------------------------------------
+    const regions = [
+        { name: "Kabupaten Serang", lat: -6.09165, lng: 105.68335, desc: "Pusat layanan perlindungan anak" },
+        { name: "Kabupaten Pandeglang", lat: -6.75835, lng: 105.49165, desc: "PATBM aktif" },
+        { name: "Kabupaten Lebak", lat: -6.6500, lng: 105.95835, desc: "Unit PPA & Puskesmas" },
+        { name: "Kabupaten Tangerang", lat: -6.16665, lng: 106.525, desc: "UPTD PPA Terpadu" },
+        { name: "Kota Serang", lat: -6.175, lng: 106.2667, desc: "Kantor Komnas Perlindungan Anak Banten" },
+        { name: "Kota Cilegon", lat: -5.975, lng: 105.99167, desc: "Layanan SAPA 129" },
+        { name: "Kota Tangerang", lat: -6.15835, lng: 106.65, desc: "Forum Anak Kota" },
+        { name: "Kota Tangerang Selatan", lat: -6.2917, lng: 106.7083, desc: "POSKO PATBM Tangsel" }
     ];
 
-    // Menambahkan marker untuk masing-masing kab/kota (dengan popup informasi)
-    kotaBanten.forEach(kota => {
-        const marker = L.marker([kota.lat, kota.lng], {
-            title: kota.name,
-            riseOnHover: true
+    // Inisialisasi Peta
+    let map;
+    let redMarker = null;  // untuk panic marker (titik merah lokasi hp)
+    
+    // Batas wilayah provinsi banten (estimasi) agar peta fokus ke semua marker
+    const boundsBanten = [
+        [-7.2, 104.8],  // Southwest
+        [-5.8, 107.0]   // Northeast
+    ];
+
+    function initMap() {
+        // peta menggunakan OpenStreetMap tiles yang ramah anak
+        map = L.map('childMap').setView([-6.3, 106.0], 9);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> & CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 18,
+            minZoom: 8
         }).addTo(map);
-        // Popup ceria
-        marker.bindPopup(`
-            <b>🏙️ ${kota.name}</b><br>
-            <span style="font-size:12px">📍 ${kota.type} Provinsi Banten<br>
-            🤝 Layanan PPA & Forum Anak tersedia</span>
-        `);
-        // tooltip tambahan (ramah)
-        marker.bindTooltip(kota.name, { sticky: true, offset: [0, -10] });
-    });
-
-    // Tambahkan optional marker cantik di beberapa titik edukasi? cukup simple.
-
-    // =============== VARIABEL GLOBAL ===============
-    let currentPanicMarker = null;      // menyimpan titik merah (circleMarker)
-    let lastPanicCoords = null;         // koordinat terakhir dari panic button
-
-    // =============== FUNGSI TOAST NOTIF ===============
-    function showToast(message, isError = false) {
-        const toast = document.getElementById('toastMsg');
-        toast.textContent = message;
-        toast.style.backgroundColor = isError ? '#D32F2F' : '#F57C00';
-        toast.style.opacity = '1';
-        setTimeout(() => {
-            toast.style.opacity = '0';
-        }, 2800);
+        
+        // Tambahkan marker untuk setiap kabupaten/kota dengan ikon ceria
+        regions.forEach(region => {
+            const customIcon = L.divIcon({
+                html: `<div style="background-color:#ffb347; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 2px 6px rgba(0,0,0,0.2);"><i class="fas fa-map-marker-alt" style="color:white; font-size:16px;"></i></div>`,
+                iconSize: [30, 30],
+                className: 'custom-div-icon'
+            });
+            const marker = L.marker([region.lat, region.lng], { icon: customIcon }).addTo(map);
+            marker.bindPopup(`
+                <b>🏙️ ${region.name}</b><br>
+                📍 ${region.desc}<br>
+                <i class="fas fa-phone"></i> Lapor kekerasan: hub 129 atau WA 08111129129
+            `);
+        });
+        
+        // optional: tambahkan layer batas provinsi sederhana? biar lebih ramah anak (bounding box)
+        L.rectangle(boundsBanten, { color: "#f59e0b", weight: 2, fill: false, dashArray: "5, 5" }).addTo(map);
+        
+        // pesan tambahan
+        map.fitBounds(boundsBanten);
     }
 
-    // =============== FUNGSI PANIC BUTTON (TITIK MERAH) ===============
-    function triggerPanicButton() {
-        // Cek apakah browser mendukung geolocation
+    // Fungsi mendapatkan lokasi pengguna dan menambahkan marker merah (panic)
+    function triggerPanic() {
         if (!navigator.geolocation) {
-            showToast("⚠️ Browser tidak mendukung lokasi. Hubungi 129 langsung.", true);
+            alert("Perangkat tidak mendukung GPS. Gunakan HP modern untuk panic button.");
             return;
         }
-
-        // Loading feedback
-        showToast("📍 Mendeteksi lokasi HP anda... Tekan panic sekali lagi jika perlu", false);
-
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
-                // Hapus marker merah sebelumnya jika ada
-                if (currentPanicMarker) {
-                    map.removeLayer(currentPanicMarker);
+                // hapus marker merah sebelumnya jika ada
+                if (redMarker) {
+                    map.removeLayer(redMarker);
                 }
-
-                // Buat titik merah besar (lingkaran merah terang)
-                currentPanicMarker = L.circleMarker([latitude, longitude], {
-                    radius: 16,
-                    fillColor: "#FF3333",
-                    color: "#FFFFFF",
-                    weight: 3,
-                    opacity: 1,
-                    fillOpacity: 0.85,
-                    className: "panic-marker"
-                }).addTo(map);
-
-                // Tambahkan tooltip / popup untuk titik darurat
-                currentPanicMarker.bindPopup(`
-                    <b style="color:#D32F2F;">🆘 TITIK DARURAT!</b><br>
-                    Lokasi anda terdeteksi disini.<br>
-                    Segera hubungi 129 atau orang dewasa terpercaya.
-                `).openPopup();
-
-                // Simpan koordinat terakhir untuk share via WA
-                lastPanicCoords = { lat: latitude, lng: longitude };
-
-                // Pindahkan view peta ke lokasi dengan zoom
-                map.setView([latitude, longitude], 15);
-                showToast("⚠️ Titik MERAH darurat telah muncul! Bagikan via WA jika perlu.", false);
+                // membuat marker merah (besar, dengan icon merah animasi)
+                const redIcon = L.divIcon({
+                    html: `<div style="background-color:#e11d48; width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:3px solid white; box-shadow:0 0 10px red; animation: pulse 1s infinite;"><i class="fas fa-exclamation-triangle" style="color:white; font-size:22px;"></i></div><style>@keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.2); opacity: 0.8; } }</style>`,
+                    iconSize: [42, 42],
+                    className: 'panic-marker'
+                });
+                redMarker = L.marker([latitude, longitude], { icon: redIcon }).addTo(map);
+                redMarker.bindPopup("<b>❗ LOKASI DARURAT ❗</b><br>Anak dalam situasi butuh perlindungan.<br>Hubungi 129 atau share lokasi ke WA.").openPopup();
+                map.flyTo([latitude, longitude], 14);
+                // notifikasi tambahan
+                alert("🚨 Titik merah telah muncul di peta! Jika ada bahaya segera hubungi 129 atau bagikan lokasi via WA.");
             },
             (error) => {
-                console.warn(error);
-                let pesanError = "Gagal mendapat lokasi. Pastikan izin lokasi aktif.";
-                if (error.code === 1) pesanError = "Izin lokasi ditolak. Aktifkan di pengaturan HP.";
-                if (error.code === 2) pesanError = "Lokasi tidak tersedia. Coba di area terbuka.";
-                showToast(pesanError, true);
+                console.error(error);
+                let pesan = "Gagal mengambil lokasi. Pastikan izin lokasi diaktifkan.";
+                if (error.code === 1) pesan = "Izin lokasi ditolak. Aktifkan lokasi untuk panic button dan titik merah.";
+                else if (error.code === 2) pesan = "Lokasi tidak tersedia. Coba nyalakan GPS.";
+                alert(pesan);
             },
-            {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
-            }
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    }
+    
+    // Fungsi SHARE LOKASI via WHATSAPP ke nomor 08111129129 (mengirim pesan berisi link maps dan koordinat)
+    function shareLocationToWA() {
+        if (!navigator.geolocation) {
+            alert("Maaf, browser tidak mendukung geolokasi. Tidak bisa share lokasi.");
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                const mapsLink = `https://maps.google.com/?q=${latitude},${longitude}`;
+                const message = `HALO BANTEN! Saya butuh bantuan perlindungan anak. Lokasi saya saat ini: ${mapsLink}\nKoordinat: ${latitude}, ${longitude}\nMohon bantuan segera untuk keselamatan anak (kekerasan/bullying/darurat). Terima kasih.`;
+                const encodedMsg = encodeURIComponent(message);
+                const waUrl = `https://wa.me/628111129129?text=${encodedMsg}`;
+                window.open(waUrl, '_blank');
+            },
+            (error) => {
+                let errorMsg = "Tidak dapat mengakses lokasi untuk share. Pastikan izin lokasi diberikan.";
+                if (error.code === 1) errorMsg = "Izin lokasi ditolak. Aktifkan agar bisa share lokasi darurat.";
+                alert(errorMsg);
+            },
+            { enableHighAccuracy: true, timeout: 8000 }
         );
     }
 
-    // =============== SHARE LOKASI VIA WHATSAPP ===============
-    function shareLocationToWA() {
-        // Pastikan dulu sudah ada titik merah / pernah panic
-        if (!lastPanicCoords) {
-            showToast("🔴 Tekan tombol PANIC dulu untuk menentukan titik merah lokasi darurat!", true);
-            return;
+    // inisialisasi setelah halaman dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+        initMap();
+        
+        // pasang event listener untuk tombol Panic
+        const panicBtn = document.getElementById('panicButton');
+        if (panicBtn) {
+            panicBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                triggerPanic();
+            });
         }
-
-        const { lat, lng } = lastPanicCoords;
-        // Buat link Google Maps presisi
-        const mapsLink = `https://www.google.com/maps?q=${lat},${lng}&z=17`;
-        // Teks pesan yang ramah anak & berisi permintaan pertolongan
-        const message = `HALO, SAYA MEMBUTUHKAN BANTUAN! 🆘\n\nSaya mengaktifkan PANIC BUTTON di PETA PERLINDUNGAN ANAK BANTEN. Lokasi darurat saya:\n📍 ${mapsLink}\n\nSegera bantu saya! Hubungi 129 (Komisi Perlindungan Anak) atau orang dewasa sekitar. Jangan abaikan! 🙏\n\n*Pesan otomatis dari Aplikasi PPA Banten*`;
         
-        // Encode pesan untuk URL WhatsApp
-        const encodedMsg = encodeURIComponent(message);
-        // Bisa via nomor WA khusus? Kita gunakan format wa.me (tanpa nomor spesifik, user memilih kontak)
-        const waUrl = `https://wa.me/?text=${encodedMsg}`;
+        // tombol share lokasi via WA
+        const shareBtn = document.getElementById('shareWABtn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                shareLocationToWA();
+            });
+        }
         
-        // Buka di tab baru (mobile akan trigger WhatsApp)
-        window.open(waUrl, '_blank');
-        showToast("💬 WhatsApp terbuka, pilih kontak & kirim lokasi darurat!", false);
-    }
-
-    // =============== EVENT LISTENER ===============
-    document.getElementById('panicBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        triggerPanicButton();
+        // optional: tambahkan instruksi kecil ke dalam map untuk menyapa
+        setTimeout(() => {
+            if (map) {
+                L.control.attribution.setPosition('bottomright');
+                const infoControl = L.control({ position: 'bottomleft' });
+                infoControl.onAdd = function() {
+                    const div = L.DomUtil.create('div', 'info-legend');
+                    div.innerHTML = '<div style="background:white; padding:5px 10px; border-radius:20px; font-size:12px; font-weight:bold; color:#f97316;"><i class="fas fa-map-marked"></i> 8 Kab/Kota Banten | Klik Panic 🔴</div>';
+                    return div;
+                };
+                infoControl.addTo(map);
+            }
+        }, 500);
     });
 
-    document.getElementById('shareWaBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        shareLocationToWA();
-    });
-
-    // Tampilkan peta yang sudah siap + informasi 8 kab kota sudah ada di map.
-    // Opsional: Tambahkan legenda kecil?
-    const infoControl = L.control({ position: 'bottomright' });
-    infoControl.onAdd = function() {
-        const div = L.DomUtil.create('div', 'info-legend');
-        div.innerHTML = '<div style="background:white; padding:4px 10px; border-radius:30px; font-size:12px; font-weight:bold; box-shadow:0 1px 4px rgba(0,0,0,0.2);"><i class="fas fa-map-marker-alt" style="color:#FF8C00;"></i> 8 Kab/Kota Banten</div>';
-        return div;
-    };
-    infoControl.addTo(map);
-
-    // Tambahkan tampilan "scale" kecil biar keren
-    L.control.scale({ metric: true, imperial: false }).addTo(map);
-
-    // Jika ingin menampilkan informasi ramah anak untuk memudahkan preview peta (Marker error handling tidak masalah)
-    // Untuk memastikan peta muat semua marker, fit bounds optional:
-    const bounds = [];
-    kotaBanten.forEach(k => bounds.push([k.lat, k.lng]));
-    // Jangan force zoom langsung biar user lihat bebas, tapi bisa set maxbounds
-    map.fitBounds(bounds, { padding: [40, 40] });
-    
-    // =============== DUMMY SYARAT: Titik merah sesuai lokasi HP di peta (sudah) ===============
-    // Pemberitahuan jika user tidak memberikan izin, kita siapkan instruksi manual
-    // Berikut adalah pencegahan error saat load tidak mengganggu fitur utama
-    console.log("Aplikasi Peta Perlindungan Anak Banten siap ✅");
+    // style tambahan untuk leaflet marker lebih responsif dan ramah anak
+    const style = document.createElement('style');
+    style.textContent = `
+        .custom-div-icon, .panic-marker {
+            background: transparent;
+            border: none;
+        }
+        .leaflet-popup-content-wrapper {
+            background: #fef1df;
+            color: #b45309;
+            border-radius: 18px;
+            font-weight: 500;
+        }
+        .leaflet-popup-tip {
+            background: #fef1df;
+        }
+        button, a {
+            cursor: pointer;
+        }
+        .emergency-card:active {
+            transform: scale(0.97);
+        }
+    `;
+    document.head.appendChild(style);
 </script>
 </body>
 </html>
