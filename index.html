@@ -20,7 +20,7 @@
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(145deg, #FEF7E6 0%, #FFEFD5 100%);
+            background: linear-gradient(145deg, #FFF9E6 0%, #FFEFD5 100%);
             color: #2D2F36;
             height: 100vh;
             overflow: hidden;
@@ -28,16 +28,15 @@
             flex-direction: column;
         }
 
-        /* Main app container */
+        /* App container */
         .app {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            position: relative;
         }
 
-        /* Header ceria */
+        /* Header */
         .app-header {
             background: linear-gradient(135deg, #FF9F4A, #FFB347);
             padding: 14px 20px;
@@ -59,7 +58,7 @@
             opacity: 0.9;
         }
 
-        /* Konten utama scrollable */
+        /* Main content scrollable */
         .main-content {
             flex: 1;
             overflow-y: auto;
@@ -67,14 +66,14 @@
             scroll-behavior: smooth;
         }
 
-        /* Tab bar */
+        /* Bottom Navigation */
         .bottom-nav {
             background: #FFFFFFE6;
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 8px 12px 12px;
+            padding: 6px 12px 10px;
             border-top: 1px solid #FFDC97;
             box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
             z-index: 10;
@@ -84,19 +83,19 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             color: #B97F2E;
             background: transparent;
             border: none;
             cursor: pointer;
             transition: 0.2s;
-            padding: 6px 12px;
+            padding: 6px 8px;
             border-radius: 40px;
             font-family: 'Quicksand', sans-serif;
         }
         .nav-item i {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
         .nav-item.active {
             color: #E63946;
@@ -109,7 +108,7 @@
         /* Tab panes */
         .tab-pane {
             display: none;
-            animation: fadeIn 0.2s ease;
+            animation: fadeIn 0.25s ease;
         }
         .tab-pane.active-pane {
             display: block;
@@ -119,7 +118,7 @@
             to { opacity: 1; transform: translateY(0);}
         }
 
-        /* Peta */
+        /* Peta & tombol */
         #mapid {
             height: 350px;
             border-radius: 28px;
@@ -163,10 +162,10 @@
             margin-top: 8px;
         }
 
-        /* Daftar kab/kota (tab Peta) */
+        /* Daftar kabupaten (tab Peta) */
         .kabupaten-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 12px;
             margin-top: 16px;
         }
@@ -187,7 +186,7 @@
         .kab-card button {
             background: #FF9F4A;
             border: none;
-            padding: 6px 12px;
+            padding: 8px 12px;
             border-radius: 30px;
             color: white;
             font-weight: bold;
@@ -197,6 +196,8 @@
             align-items: center;
             gap: 6px;
             font-family: 'Quicksand', sans-serif;
+            width: 100%;
+            justify-content: center;
         }
         .kab-card button:active {
             transform: scale(0.96);
@@ -287,11 +288,11 @@
 <div class="app">
     <div class="app-header">
         <h1><i class="fas fa-map-marked-alt"></i> PETA PERLINDUNGAN ANAK BANTEN</h1>
-        <p><i class="fas fa-child"></i> #SahabatAnakBanten</p>
+        <p><i class="fas fa-child"></i> #SahabatAnakBanten | Selalu Ada Jalan Untuk Berlindung</p>
     </div>
 
     <div class="main-content" id="mainContent">
-        <!-- TAB BERANDA -->
+        <!-- TAB BERANDA (Peta + Panic Button) -->
         <div id="berandaPane" class="tab-pane active-pane">
             <div id="mapid"></div>
             <div class="action-buttons">
@@ -302,17 +303,17 @@
                 <i class="fas fa-map-pin"></i> Klik Panic Button → titik merah di lokasimu | Tap marker ibukota
             </div>
             <div style="margin-top: 16px; font-size: 0.7rem; text-align: center; background:#FFF0DD; padding:8px; border-radius:28px;">
-                📞 Darurat: <strong>129</strong> atau <strong>WA 0811-1129-129</strong> (klik tombol di tab Rujukan)
+                📞 Darurat: <strong>129</strong> (Hotline Sahabat Anak) atau <strong>WA 0811-1129-129</strong>
             </div>
         </div>
 
-        <!-- TAB PETA (DAFTAR KAB/KOTA DENGAN TOMBOL KONTAK LEMBAGA MASING-MASING) -->
+        <!-- TAB PETA (DAFTAR 8 KABUPATEN/KOTA DENGAN TOMBOL KONTAK LEMBAGA) -->
         <div id="petaPane" class="tab-pane">
             <h3 style="margin-bottom: 8px;"><i class="fas fa-city"></i> 8 Kabupaten / Kota Banten</h3>
-            <p style="font-size:0.8rem;">Klik tombol di bawah untuk menghubungi lembaga perlindungan anak setempat (WA/Telepon)</p>
+            <p style="font-size:0.8rem;">Klik tombol di bawah untuk menghubungi lembaga perlindungan anak setempat (WhatsApp/Telepon)</p>
             <div id="kabupatenList" class="kabupaten-grid"></div>
             <div class="info-loc" style="margin-top:16px;">
-                <i class="fas fa-info-circle"></i> Setiap daerah memiliki UPTD PPA dan hotline sendiri.
+                <i class="fas fa-info-circle"></i> Setiap daerah memiliki UPTD PPA dan layanan pengaduan. Jika nomor tidak tersedia, gunakan hotline provinsi 129.
             </div>
         </div>
 
@@ -320,24 +321,25 @@
         <div id="sopPane" class="tab-pane">
             <div class="sop-card">
                 <h3><i class="fas fa-hands-helping"></i> Langkah Keselamatan Anak</h3>
-                <p>✔️ Jika mengalami kekerasan fisik, seksual, atau bullying:</p>
-                <ul style="margin-left: 20px; margin-top: 8px;">
+                <p>✔️ Jika mengalami kekerasan fisik, seksual, bullying, atau ancaman:</p>
+                <ul style="margin-left: 20px; margin-top: 8px; line-height:1.6;">
                     <li>1. Jangan panik, cari tempat aman</li>
-                    <li>2. Segera hubungi orang dewasa terpercaya</li>
+                    <li>2. Segera hubungi orang dewasa terpercaya (guru, orang tua, tetangga)</li>
                     <li>3. Lakukan <strong>TOTELALA</strong> (Tolak, Teriak, Lari, Lapor)</li>
-                    <li>4. Laporkan ke lembaga perlindungan anak terdekat</li>
+                    <li>4. Laporkan ke lembaga perlindungan anak terdekat (lihat tab Rujukan)</li>
                 </ul>
             </div>
             <div class="totelala">
                 <i class="fas fa-bullhorn"></i> TOTELALA <i class="fas fa-running"></i><br>
                 <span>Tolak</span> <span>Teriak</span> <span>Lari</span> <span>Lapor</span>
-                <div style="font-size:0.8rem; margin-top:8px;">✨ Teriak minta tolong, Lari ke keramaian, Lapor ke polisi atau guru ✨</div>
+                <div style="font-size:0.8rem; margin-top:8px;">✨ Tolak dengan berani, Teriak minta tolong, Lari ke keramaian, Lapor ke polisi atau guru ✨</div>
             </div>
             <div class="sop-card">
-                <h3><i class="fas fa-file-alt"></i> SOP Pendampingan</h3>
+                <h3><i class="fas fa-file-alt"></i> SOP Pendampingan (Standar Operasional)</h3>
                 <p>✅ Korban berhak mendapatkan pendampingan psikologis dan hukum.<br>
                 ✅ Laporan bisa disampaikan ke <strong>Unit PPA Polres</strong> terdekat.<br>
-                ✅ PATBM dan Forum Anak siap membantu di tingkat desa/kelurahan.</p>
+                ✅ <strong>PATBM</strong> (Perlindungan Anak Terpadu Berbasis Masyarakat) dan <strong>Forum Anak</strong> siap membantu di tingkat desa/kelurahan.<br>
+                ✅ Segera konsultasi ke <strong>UPTD PPA</strong> untuk layanan trauma healing dan medis.</p>
             </div>
         </div>
 
@@ -346,8 +348,8 @@
             <div class="rujukan-card">
                 <h3><i class="fas fa-shield-alt"></i> Lembaga Rujukan & Pendampingan</h3>
                 <div class="kontak-list" id="lembagaList"></div>
-                <div style="margin-top: 20px; text-align:center;">
-                    <a href="tel:129" class="btn-kontak" style="background:#FF7043; text-decoration:none; display:inline-block; margin:5px;"><i class="fas fa-phone"></i> 129 (Hotline Anak)</a>
+                <div style="margin-top: 20px; text-align:center; display: flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                    <a href="tel:129" class="btn-kontak" style="background:#FF7043; text-decoration:none; display:inline-flex; align-items:center; gap:6px;"><i class="fas fa-phone"></i> 129 (Hotline Anak)</a>
                     <button id="waNasionalBtn" class="btn-kontak" style="background:#075E54;"><i class="fab fa-whatsapp"></i> WA 08111129129</button>
                 </div>
             </div>
@@ -358,8 +360,15 @@
             <div class="profile-info">
                 <i class="fas fa-heart" style="font-size: 3rem; color:#E63946;"></i>
                 <h3>Peta Perlindungan Anak Banten</h3>
-                <p>Aplikasi ini dibuat untuk membantu anak-anak dan masyarakat melaporkan serta mendapatkan perlindungan dari kekerasan.</p>
-                <p><strong>Fitur :</strong> Panic Button (titik merah di peta), Share Lokasi WA, Daftar kontak lembaga tiap kab/kota, SOP TOTELALA, dan rujukan.</p>
+                <p>Aplikasi ini membantu anak-anak dan masyarakat melaporkan kekerasan serta mendapatkan perlindungan cepat.</p>
+                <p><strong>Fitur :</strong><br>
+                🚨 Panic Button → titik merah di lokasi HP<br>
+                📲 Share Lokasi ke WA 08111129129<br>
+                🗺️ Peta interaktif 8 kab/kota Banten<br>
+                📞 Kontak lembaga perlindungan tiap daerah<br>
+                📘 SOP & TOTELALA (Tolak, Teriak, Lari, Lapor)<br>
+                🛡️ Daftar rujukan: Komnas Anak, UPTD PPA, Unit PPA, PATBM, Forum Anak
+                </p>
                 <footer style="margin-top:20px;">
                     Dipersembahkan dengan penuh cinta dari <br><strong>Komnas Perlindungan Anak Provinsi Banten</strong>
                 </footer>
@@ -380,21 +389,25 @@
 
 <script>
     // ======================= DATA 8 KABUPATEN/KOTA BANTEN =======================
+    // Setiap kab/kota memiliki kontak lembaga (UPTD PPA atau Dinas terkait) via WhatsApp/Telepon
+    // Untuk demo, nomor menggunakan format yang mengarah ke hotline provinsi + pesan otomatis
+    // Namun agar fungsional, kita arahkan ke nomor WA Pusat 08111129129 dengan pesan spesifik daerah
     const kabupatenData = [
-        { name: "Kota Serang", lat: -6.1188, lng: 106.1502, kontak: "UPTD PPA Kota Serang", nomorWa: "6281312345678", telp: "0254-123456" },
-        { name: "Kab. Serang", lat: -6.2580, lng: 106.2190, kontak: "UPTD PPA Kab. Serang", nomorWa: "6281312345679", telp: "0254-654321" },
-        { name: "Kota Cilegon", lat: -6.0121, lng: 106.0250, kontak: "Unit PPA Cilegon", nomorWa: "6281312345680", telp: "0254-789012" },
-        { name: "Kab. Pandeglang", lat: -6.3140, lng: 106.1050, kontak: "Dinsos PPA Pandeglang", nomorWa: "6281312345681", telp: "0253-345678" },
-        { name: "Kab. Lebak", lat: -6.5190, lng: 106.2490, kontak: "UPTD PPA Lebak", nomorWa: "6281312345682", telp: "0252-456789" },
-        { name: "Kab. Tangerang", lat: -6.2660, lng: 106.4610, kontak: "P2TP2A Kab. Tangerang", nomorWa: "6281312345683", telp: "021-5567890" },
-        { name: "Kota Tangerang", lat: -6.1780, lng: 106.6310, kontak: "UPTD PPA Kota Tangerang", nomorWa: "6281312345684", telp: "021-5577890" },
-        { name: "Kota Tangsel", lat: -6.2830, lng: 106.7170, kontak: "DP3A Tangsel", nomorWa: "6281312345685", telp: "021-74712345" }
+        { name: "Kota Serang", lat: -6.1188, lng: 106.1502, lembaga: "UPTD PPA Kota Serang", kontak: "0254-123456", wa: "628111129291" },
+        { name: "Kab. Serang", lat: -6.2580, lng: 106.2190, lembaga: "UPTD PPA Kab. Serang", kontak: "0254-654321", wa: "628111129291" },
+        { name: "Kota Cilegon", lat: -6.0121, lng: 106.0250, lembaga: "Unit PPA Cilegon", kontak: "0254-789012", wa: "628111129291" },
+        { name: "Kab. Pandeglang", lat: -6.3140, lng: 106.1050, lembaga: "Dinsos PPA Pandeglang", kontak: "0253-345678", wa: "628111129291" },
+        { name: "Kab. Lebak", lat: -6.5190, lng: 106.2490, lembaga: "UPTD PPA Lebak", kontak: "0252-456789", wa: "628111129291" },
+        { name: "Kab. Tangerang", lat: -6.2660, lng: 106.4610, lembaga: "P2TP2A Kab. Tangerang", kontak: "021-5567890", wa: "628111129291" },
+        { name: "Kota Tangerang", lat: -6.1780, lng: 106.6310, lembaga: "UPTD PPA Kota Tangerang", kontak: "021-5577890", wa: "628111129291" },
+        { name: "Kota Tangsel", lat: -6.2830, lng: 106.7170, lembaga: "DP3A Tangsel", kontak: "021-74712345", wa: "628111129291" }
     ];
 
-    // Inisialisasi Peta (Beranda) - akan di-render saat tab beranda aktif dan map perlu di-load
+    // Inisialisasi peta (Leaflet)
     let map;
     let userLocationMarker = null;
     let mapInitialized = false;
+    let lastKnownLocation = null; // untuk menyimpan lokasi dari panic button
 
     function initMap() {
         if (mapInitialized) return;
@@ -403,90 +416,108 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> & CartoDB',
             subdomains: 'abcd'
         }).addTo(map);
-        // Menambahkan marker 8 kab/kota dengan custom icon
+        // Tambahkan marker untuk setiap kab/kota
         kabupatenData.forEach(kab => {
-            const marker = L.marker([kab.lat, kab.lng]).addTo(map);
-            marker.bindPopup(`<b>${kab.name}</b><br>${kab.kontak}<br>📞 ${kab.telp}`);
+            L.marker([kab.lat, kab.lng]).addTo(map).bindPopup(`
+                <b>${kab.name}</b><br>${kab.lembaga}<br>📞 ${kab.kontak}<br>
+                <button onclick="window.open('https://wa.me/${kab.wa}?text=Halo%20${encodeURIComponent(kab.lembaga)}%2C%20saya%20dari%20${encodeURIComponent(kab.name)}%20butuh%20bantuan%20perlindungan%20anak.','_blank')" style="background:#25D366; border:none; border-radius:20px; padding:4px 10px; color:white; margin-top:5px;">Hubungi WA</button>
+            `);
         });
         map.fitBounds(L.latLngBounds(kabupatenData.map(k => [k.lat, k.lng])).pad(0.2));
         mapInitialized = true;
     }
 
-    // Fungsi untuk refresh map saat tab beranda muncul
+    // Fungsi untuk memastikan peta visible saat tab beranda aktif
     function ensureMapVisible() {
         if (document.getElementById('berandaPane').classList.contains('active-pane')) {
-            if (!mapInitialized) {
-                initMap();
-            } else {
-                setTimeout(() => { map.invalidateSize(); }, 100);
-            }
+            if (!mapInitialized) initMap();
+            else setTimeout(() => map.invalidateSize(), 100);
         }
     }
 
-    // Panic Button: muncul titik merah di lokasi HP
-    async function getPosition() {
+    // Panic Button: ambil lokasi dan tampilkan titik merah
+    async function getCurrentPosition() {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 10000 });
         });
     }
+
     async function handlePanic() {
         const btn = document.getElementById('panicButton');
         const toast = document.getElementById('loadingToast');
-        if (!navigator.geolocation) { alert("GPS tidak didukung."); return; }
+        if (!navigator.geolocation) {
+            alert("GPS tidak didukung di perangkat ini. Kamu tetap bisa menghubungi 129.");
+            return;
+        }
         btn.disabled = true;
         const origText = btn.innerHTML;
         btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Ambil lokasi...';
         toast.style.opacity = '1';
         toast.textContent = "Mendapatkan lokasi untuk titik merah...";
         try {
-            const pos = await getPosition();
+            const pos = await getCurrentPosition();
             const { latitude, longitude } = pos.coords;
             if (!mapInitialized) initMap();
             if (userLocationMarker) map.removeLayer(userLocationMarker);
+            // Titik merah besar
             userLocationMarker = L.circleMarker([latitude, longitude], {
-                color: "#E63946", fillColor: "#FF4D4D", fillOpacity: 0.9, radius: 16, weight: 3
+                color: "#E63946",
+                fillColor: "#FF4D4D",
+                fillOpacity: 0.9,
+                radius: 16,
+                weight: 3,
+                opacity: 1
             }).addTo(map);
-            userLocationMarker.bindPopup("🚨 LOKASI DARURAT ANDA 🚨").openPopup();
+            userLocationMarker.bindPopup("🚨 LOKASI DARURAT ANDA 🚨<br>Segera gunakan tombol SHARE LOKASI").openPopup();
             map.flyTo([latitude, longitude], 14);
-            window.lastLocation = { lat: latitude, lng: longitude };
+            lastKnownLocation = { lat: latitude, lng: longitude };
             toast.textContent = "✅ Titik merah telah muncul di peta!";
-            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
             document.getElementById('locInfo').innerHTML = '<i class="fas fa-map-marker-alt" style="color:#E63946;"></i> Titik merah aktif! Lokasi tersimpan.';
+            setTimeout(() => toast.style.opacity = '0', 2000);
         } catch (err) {
-            alert("Gagal ambil lokasi. Pastikan izin lokasi aktif.");
-            toast.textContent = "Gagal mendapatkan lokasi.";
-            setTimeout(() => toast.style.opacity = '0', 1500);
+            let pesan = "Gagal ambil lokasi. Pastikan izin lokasi diberikan dan GPS aktif.";
+            if (err.code === 1) pesan = "Izin lokasi ditolak. Aktifkan di pengaturan browser.";
+            alert(pesan);
+            toast.textContent = pesan;
+            setTimeout(() => toast.style.opacity = '0', 2000);
         } finally {
             btn.disabled = false;
             btn.innerHTML = origText;
         }
     }
 
-    // Share lokasi via WA ke nomor 08111129129 (format 628111129129)
-    async function shareLocationWA() {
+    // Share lokasi via WA ke nomor 08111129129 (628111129291)
+    async function shareLocationToWA() {
         const shareBtn = document.getElementById('shareWaButton');
         const toast = document.getElementById('loadingToast');
         shareBtn.disabled = true;
         shareBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Mengirim...';
         toast.style.opacity = '1';
-        toast.textContent = "Mempersiapkan pesan...";
+        toast.textContent = "Mempersiapkan pesan WhatsApp...";
+        
         let lat = null, lng = null;
-        if (window.lastLocation) {
-            lat = window.lastLocation.lat; lng = window.lastLocation.lng;
+        if (lastKnownLocation) {
+            lat = lastKnownLocation.lat;
+            lng = lastKnownLocation.lng;
         } else {
             try {
-                const pos = await getPosition();
-                lat = pos.coords.latitude; lng = pos.coords.longitude;
-                window.lastLocation = { lat, lng };
-            } catch(e) { console.warn(e); }
+                const pos = await getCurrentPosition();
+                lat = pos.coords.latitude;
+                lng = pos.coords.longitude;
+                lastKnownLocation = { lat, lng };
+            } catch (e) {
+                console.warn("Tidak dapat ambil lokasi realtime");
+            }
         }
-        let message = "Halo Tim Perlindungan Anak Banten, saya butuh bantuan. ";
-        if (lat && lng) {
-            message += `Lokasi saya: https://www.google.com/maps?q=${lat},${lng}`;
-        } else {
-            message += "Saya tidak dapat membagikan lokasi otomatis, tolong arahkan saya.";
-        }
+        
         const waNumber = "628111129291"; // 08111129129
+        let message = "Halo Tim Perlindungan Anak Banten, saya butuh bantuan segera! ";
+        if (lat && lng) {
+            message += `Lokasi saya: https://www.google.com/maps?q=${lat},${lng} (Lat: ${lat}, Lng: ${lng})`;
+        } else {
+            message += "Saya tidak dapat membagikan lokasi otomatis. Mohon arahkan saya ke layanan terdekat.";
+        }
+        message += " Saya atau teman saya memerlukan perlindungan karena kekerasan/ancaman. Terima kasih.";
         const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
         window.open(waLink, '_blank');
         toast.textContent = "✅ Pesan terkirim! Cek WhatsApp.";
@@ -495,7 +526,7 @@
         shareBtn.innerHTML = '<i class="fab fa-whatsapp"></i> SHARE LOKASI';
     }
 
-    // Generate daftar kabupaten pada tab PETA dengan tombol masing-masing
+    // Generate daftar kabupaten di tab Peta dengan tombol kontak masing-masing
     function populateKabupatenList() {
         const container = document.getElementById('kabupatenList');
         container.innerHTML = '';
@@ -504,33 +535,33 @@
             card.className = 'kab-card';
             card.innerHTML = `
                 <h3><i class="fas fa-location-dot"></i> ${kab.name}</h3>
-                <p style="font-size:0.7rem;">${kab.kontak}</p>
-                <button class="call-kab-btn" data-name="${kab.name}" data-wa="${kab.nomorWa}" data-telp="${kab.telp}">
+                <p style="font-size:0.7rem;">${kab.lembaga}<br>📞 ${kab.kontak}</p>
+                <button class="hubungi-kab" data-name="${kab.name}" data-wa="${kab.wa}" data-lembaga="${kab.lembaga}">
                     <i class="fab fa-whatsapp"></i> Hubungi Lembaga
                 </button>
             `;
             container.appendChild(card);
         });
-        // Tambahkan event listener untuk setiap tombol
-        document.querySelectorAll('.call-kab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const waNumber = btn.getAttribute('data-wa');
+        // Event listener untuk setiap tombol
+        document.querySelectorAll('.hubungi-kab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const wa = btn.getAttribute('data-wa');
                 const kabName = btn.getAttribute('data-name');
-                const message = `Halo, saya warga ${kabName}. Saya butuh bantuan perlindungan anak. Mohon arahkan.`;
-                window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
+                const lembaga = btn.getAttribute('data-lembaga');
+                const message = `Halo, saya dari ${kabName} (${lembaga}). Saya butuh bantuan perlindungan anak. Mohon pendampingan.`;
+                window.open(`https://wa.me/${wa}?text=${encodeURIComponent(message)}`, '_blank');
             });
         });
     }
 
-    // Lembaga rujukan (daftar di tab Rujukan)
+    // Daftar lembaga rujukan (tab Rujukan)
     function populateLembaga() {
         const lembagaList = [
-            { nama: "Komnas Perlindungan Anak", kontak: "021-3900833", wa: "6281380882288", type: "call" },
-            { nama: "UPTD PPA Banten", kontak: "0254-123456", wa: "628111129291", type: "wa" },
-            { nama: "Unit PPA Polda Banten", kontak: "110", wa: null, type: "call" },
-            { nama: "PATBM (Perlindungan Anak Terpadu)", kontak: "129", wa: null, type: "call" },
-            { nama: "Forum Anak Banten", kontak: "08123456789", wa: "628123456789", type: "wa" }
+            { nama: "Komnas Perlindungan Anak", kontak: "021-3900833", wa: "6281380882288", jenis: "wa" },
+            { nama: "UPTD PPA Provinsi Banten", kontak: "0254-123456", wa: "628111129291", jenis: "wa" },
+            { nama: "Unit PPA Polda Banten", kontak: "110", wa: null, jenis: "telp" },
+            { nama: "PATBM (Perlindungan Anak Terpadu)", kontak: "129", wa: null, jenis: "telp" },
+            { nama: "Forum Anak Banten", kontak: "08123456789", wa: "628123456789", jenis: "wa" }
         ];
         const container = document.getElementById('lembagaList');
         container.innerHTML = '';
@@ -544,6 +575,7 @@
             `;
             container.appendChild(div);
         });
+        // Event WA
         document.querySelectorAll('.wa-lembaga').forEach(btn => {
             btn.addEventListener('click', () => {
                 const wa = btn.getAttribute('data-wa');
@@ -551,6 +583,7 @@
                 window.open(`https://wa.me/${wa}?text=Halo%20${encodeURIComponent(nama)}%2C%20saya%20butuh%20pendampingan%20anak.`, '_blank');
             });
         });
+        // Event telepon
         document.querySelectorAll('.telp-lembaga').forEach(btn => {
             btn.addEventListener('click', () => {
                 const telp = btn.getAttribute('data-telp');
@@ -559,13 +592,12 @@
         });
     }
 
-    // WA Nasional dari tab Rujukan
+    // Tombol WA Nasional
     document.getElementById('waNasionalBtn')?.addEventListener('click', () => {
         window.open('https://wa.me/628111129291?text=Halo%20saya%20butuh%20bantuan%20perlindungan%20anak.', '_blank');
     });
 
     // ======================= TAB NAVIGATION =======================
-    const tabs = ['beranda', 'peta', 'sop', 'rujukan', 'akun'];
     const panes = {
         beranda: document.getElementById('berandaPane'),
         peta: document.getElementById('petaPane'),
@@ -587,15 +619,8 @@
                 btn.classList.remove('active');
             }
         });
-        // Jika tab beranda aktif, pastikan peta tampil dan resize
-        if (tabId === 'beranda') {
-            if (!mapInitialized) initMap();
-            else setTimeout(() => map.invalidateSize(), 150);
-        }
-        // Jika tab peta, kita isi data kabupaten (sudah diisi di awal)
-        if (tabId === 'peta') {
-            if (document.getElementById('kabupatenList').innerHTML === '') populateKabupatenList();
-        }
+        if (tabId === 'beranda') ensureMapVisible();
+        if (tabId === 'peta' && document.getElementById('kabupatenList').innerHTML === '') populateKabupatenList();
     }
 
     navButtons.forEach(btn => {
@@ -606,23 +631,22 @@
     });
 
     // Inisialisasi awal
+    initMap();
     populateKabupatenList();
     populateLembaga();
-    // Peta ditampilkan saat pertama kali (beranda aktif)
-    initMap();
-    // Event listeners tombol
-    document.getElementById('panicButton')?.addEventListener('click', handlePanic);
-    document.getElementById('shareWaButton')?.addEventListener('click', shareLocationWA);
 
-    // Resize map jika terjadi perubahan orientasi
+    // Event listeners tombol aksi
+    document.getElementById('panicButton')?.addEventListener('click', handlePanic);
+    document.getElementById('shareWaButton')?.addEventListener('click', shareLocationToWA);
+
+    // Resize map saat orientasi berubah
     window.addEventListener('resize', () => {
         if (mapInitialized && panes.beranda.classList.contains('active-pane')) {
             setTimeout(() => map.invalidateSize(), 100);
         }
     });
 
-    // Tampilkan toast jika geolocation block (opsional)
-    console.log("Aplikasi Peta Perlindungan Anak Banten siap digunakan.");
+    console.log("Peta Perlindungan Anak Banten siap | #SahabatAnakBanten");
 </script>
 </body>
 </html>
