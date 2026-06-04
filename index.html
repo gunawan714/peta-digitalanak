@@ -350,7 +350,7 @@
     function handlePanic() {
         // Cek apakah geolocation didukung
         if (!navigator.geolocation) {
-            alert("Maaf, perangkat Anda tidak mendukung GPS. Hubungi nomor darurat 08111129129.");
+            alert("Maaf, perangkat Anda tidak mendukung GPS. Hubungi nomor darurat 08991129129.");
             return;
         }
 
@@ -433,7 +433,7 @@
         // Format pesan untuk WhatsApp
         const message = `🚨 *LAPORAN DARURAT - PETA PERLINDUNGAN ANAK BANTEN* 🚨\n\n*Lokasi Saya:* ${mapsLink}\n(Latitude: ${lat}, Longitude: ${lng})\n\n*Kronologi Kejadian:*\n${kronologi}\n\n--\nSaya membutuhkan bantuan segera. Mohon pendampingan dari Komnas Perlindungan Anak Banten. #SahabatAnakBanten`;
         const encodedMessage = encodeURIComponent(message);
-        const waNumber = "628111129129";  // 08111 129 129
+        const waNumber = "628991129129";  // 08991129129
         const waUrl = `https://wa.me/${waNumber}?text=${encodedMessage}`;
         // Buka WhatsApp (atau web WhatsApp)
         window.open(waUrl, '_blank');
