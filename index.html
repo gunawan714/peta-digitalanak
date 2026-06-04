@@ -2,109 +2,133 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>PETA PERLINDUNGAN ANAK BANTEN | Satu Sentuhan untuk Perlindungan Anak</title>
-    <!-- Leaflet CSS + JS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Peta Perlindungan Anak Banten | Safe Space Laporan Interaktif</title>
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;800&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #F5F3FF 0%, #FDF2F8 100%);
+            --primary: #A855F7;
+            --primary-dark: #7E22CE;
+            --danger: #EF4444;
+            --danger-dark: #DC2626;
+            --success: #10B981;
+            --warning: #FACC15;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --card-shadow: 0 12px 32px rgba(168, 85, 247, 0.08);
+            --btn-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(145deg, #F3F0FF 0%, #FDE8F5 100%);
-            color: #1F2937;
-            padding-bottom: 70px;
-        }
-
-        /* ========== BOTTOM NAVIGATION ========== */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255,255,255,0.96);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px 8px 18px;
-            border-top: 2px solid #FACC15;
-            z-index: 20;
-            max-width: 600px;
-            margin: 0 auto;
-            border-radius: 32px 32px 0 0;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
-        }
-        .nav-item {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            background: none;
-            border: none;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 700;
-            font-size: 0.7rem;
-            color: #94A3B8;
-            cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 30px;
-            transition: all 0.2s;
+            padding-bottom: 40px;
         }
-        .nav-item i { font-size: 1.5rem; }
-        .nav-item.active { color: #A855F7; background: #F3E8FF; }
 
-        /* Header */
+        /* ========== HEADER AREA ========== */
         .app-header {
-            background: linear-gradient(135deg, #A855F7, #C084FC);
-            padding: 20px 20px 16px;
+            background: linear-gradient(135deg, var(--primary), #C084FC);
+            padding: 24px 20px;
             color: white;
-            border-bottom-left-radius: 32px;
-            border-bottom-right-radius: 32px;
-            box-shadow: 0 6px 16px rgba(168,85,247,0.3);
+            border-radius: 0 0 32px 32px;
+            box-shadow: 0 8px 24px rgba(168, 85, 247, 0.25);
+            text-align: center;
         }
+
         .app-header h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
+            font-weight: 800;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
+            letter-spacing: -0.5px;
         }
-        .app-header p {
-            font-size: 0.8rem;
-            margin-top: 6px;
-            opacity: 0.9;
-        }
-        .main-content {
-            padding: 20px 16px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .page { display: none; animation: fade 0.3s ease; }
-        .page.active { display: block; }
-        @keyframes fade { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:translateY(0);} }
 
-        /* Card UI */
+        .app-header p {
+            font-size: 0.85rem;
+            margin-top: 6px;
+            font-weight: 700;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .main-container {
+            flex: 1;
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        /* ========== CARDS & INTERACTIVES ========== */
         .card {
             background: white;
-            border-radius: 32px;
-            padding: 20px;
+            border-radius: 28px;
+            padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            border: 1px solid rgba(168,85,247,0.2);
+            box-shadow: var(--card-shadow);
+            border: 2px solid rgba(168, 85, 247, 0.08);
+            transition: transform 0.2s ease;
         }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* ========== STEPPER FLOW ========== */
+        .step-panel {
+            display: none;
+        }
+        .step-panel.active {
+            display: block;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== GAME-STYLE BUTTONS ========== */
         .btn {
             border: none;
-            border-radius: 60px;
-            padding: 14px;
+            border-radius: 24px;
+            padding: 16px 20px;
             font-weight: 800;
             font-size: 1rem;
             display: flex;
@@ -113,463 +137,537 @@
             gap: 10px;
             cursor: pointer;
             width: 100%;
-            transition: 0.1s;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-family: 'Quicksand', sans-serif;
+            margin-top: 12px;
         }
-        .btn-primary { background: #A855F7; color: white; box-shadow: 0 4px 0 #6B21A5; }
-        .btn-danger { background: #EF4444; color: white; box-shadow: 0 4px 0 #B91C1C; }
-        .btn-warning { background: #FACC15; color: #1F2937; box-shadow: 0 4px 0 #CA8A04; }
-        .btn:active { transform: translateY(2px); box-shadow: 0 1px 0; }
-        
-        /* Peta */
-        #mapid { height: 320px; border-radius: 24px; border: 3px solid #FACC15; margin-bottom: 16px; }
-        
-        /* Form */
-        textarea, input, select {
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            box-shadow: 0 6px 0 #B91C1C, var(--btn-shadow);
+        }
+        .btn-danger:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #B91C1C, var(--btn-shadow);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 6px 0 var(--primary-dark), var(--btn-shadow);
+        }
+        .btn-primary:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 var(--primary-dark), var(--btn-shadow);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: var(--text-main);
+            box-shadow: 0 6px 0 #CA8A04, var(--btn-shadow);
+        }
+        .btn-warning:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #CA8A04, var(--btn-shadow);
+        }
+
+        .btn-secondary {
+            background: #E2E8F0;
+            color: var(--text-main);
+            box-shadow: 0 6px 0 #CBD5E1, var(--btn-shadow);
+        }
+        .btn-secondary:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #CBD5E1, var(--btn-shadow);
+        }
+
+        /* ========== FORM ELEMENTS ========== */
+        textarea {
             width: 100%;
-            padding: 12px;
-            border-radius: 24px;
+            padding: 16px;
+            border-radius: 20px;
             border: 2px solid #E2E8F0;
             font-family: 'Quicksand', sans-serif;
-            margin: 8px 0;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-top: 12px;
+            resize: none;
+            transition: border-color 0.2s;
         }
-        .audio-controls { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
-        .audio-controls button { flex:1; }
-        
-        /* Edukasi */
-        .comic-card {
-            background: #FFF7ED;
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Peta & Tracker */
+        #mainMap, #stepMap {
+            height: 240px;
             border-radius: 24px;
-            padding: 16px;
-            margin: 12px 0;
-            border-left: 8px solid #FACC15;
+            border: 3px solid var(--warning);
+            margin: 14px 0;
+            z-index: 1;
         }
-        
-        /* Safe exit button */
-        .safe-exit {
-            position: fixed;
-            bottom: 80px;
-            right: 16px;
-            background: #1E293B;
-            color: white;
-            border-radius: 50px;
-            padding: 10px 18px;
-            font-size: 0.8rem;
-            z-index: 30;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        /* Dashboard laporan */
-        .laporan-item {
+
+        /* ========== AUDIO PULSE ANIMATION ========== */
+        .audio-wrapper {
             background: #F8FAFC;
+            padding: 16px;
             border-radius: 20px;
-            padding: 14px;
-            margin-bottom: 12px;
-            border-left: 6px solid #A855F7;
+            margin-top: 12px;
+            border: 2px dashed #CBD5E1;
         }
+        .audio-actions {
+            display: flex;
+            gap: 12px;
+        }
+        .recording-pulse {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 10px;
+            color: var(--danger);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .recording-pulse i {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.3; transform: scale(0.9); }
+        }
+
+        /* ========== LIVE FEEDS / TRACKER LAPORAN ========== */
         .status-badge {
             display: inline-block;
-            padding: 4px 10px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
         }
-        @media (max-width: 500px) { .bottom-nav .nav-item span { display: none; } .bottom-nav .nav-item i { font-size: 1.8rem; } }
+        .badge-received { background: #FEF3C7; color: #D97706; }
+
+        .laporan-box {
+            background: #F9FAFB;
+            border: 2px solid #F3F4F6;
+            border-radius: 20px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .safe-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn-safe-exit {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1F2937;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: var(--btn-shadow);
+        }
     </style>
 </head>
 <body>
 
-<div class="app-header">
-    <h1><i class="fas fa-map-marked-alt"></i> PETA PERLINDUNGAN ANAK BANTEN</h1>
-    <p>🛡️ Satu Sentuhan untuk Perlindungan Anak | #SahabatAnakBanten</p>
-</div>
+    <header class="app-header">
+        <h1><i class="fas fa-shield-heart"></i> SAFE SPACE REPORTERS</h1>
+        <p>✨ #SahabatAnakBanten: Kamu Aman & Dilindungi Di Sini</p>
+    </header>
 
-<div class="main-content">
-    <!-- BERANDA -->
-    <div id="berandaPage" class="page active">
-        <div class="card">
-            <h3 style="display: flex; gap: 8px;"><i class="fas fa-map-pin"></i> Peta Wilayah Banten</h3>
-            <div id="mapid"></div>
-            <div style="font-size:0.8rem; text-align:center; margin-top:8px;">📍 8 Kabupaten/Kota | Klik marker untuk info</div>
-        </div>
+    <main class="main-container">
         
-        <div class="card">
-            <h3><i class="fas fa-bullhorn"></i> Halo, Kamu Aman Disini</h3>
-            <p>Jika kamu atau temanmu dalam bahaya, tekan tombol merah di bawah. Kami akan membantu.</p>
-            <button id="panicBtn" class="btn btn-danger" style="margin-top: 12px; font-size: 1.2rem;"><i class="fas fa-exclamation-triangle"></i> TOLONG SAYA (DARURAT)</button>
-            <button id="laporanBiasaBtn" class="btn btn-primary" style="margin-top: 10px;"><i class="fas fa-edit"></i> BUAT LAPORAN BIASA</button>
-        </div>
-        
-        <!-- Statistik sederhana -->
-        <div class="card" style="background: #F3E8FF;">
-            <p><i class="fas fa-chart-line"></i> Laporan hari ini: <strong id="totalLaporanHariIni">0</strong> | Total laporan tersimpan: <strong id="totalLaporanSemua">0</strong></p>
-        </div>
-    </div>
-
-    <!-- PETA KASUS & HEATMAP (sederhana) -->
-    <div id="petaPage" class="page">
-        <div class="card">
-            <h3><i class="fas fa-fire"></i> Peta Kasus Anak Banten</h3>
-            <div id="heatmapContainer" style="height: 300px; background: #FFF; border-radius: 24px; overflow-y: auto;">
-                <ul id="kabupatenHeatmap" style="list-style: none; padding: 12px;">
-                    <li>🔴 Kota Serang - Tinggi</li>
-                    <li>🟠 Kab. Tangerang - Sedang</li>
-                    <li>🟢 Kota Tangsel - Rendah</li>
-                    <li>🟠 Kab. Pandeglang - Sedang</li>
-                    <li>🟢 Kota Cilegon - Rendah</li>
-                    <li>🔴 Kab. Lebak - Tinggi</li>
-                    <li>🟡 Kab. Serang - Sedang</li>
-                    <li>🟢 Kota Tangerang - Rendah</li>
-                </ul>
+        <section id="panelHome" class="step-panel active">
+            <div class="card">
+                <h3>📌 Peta Zona Aman Banten</h3>
+                <p>Klik titik ungu di peta untuk melihat kontak bantuan instan terdekat di wilayahmu!</p>
+                <div id="mainMap"></div>
             </div>
-            <p class="info-note">Data simulasi berdasarkan laporan terkini.</p>
-        </div>
-    </div>
 
-    <!-- DARURAT (PANIC FLOW) -->
-    <div id="daruratPage" class="page">
-        <div class="card" id="panicFlowContainer">
-            <h3><i class="fas fa-life-ring"></i> Alur Darurat</h3>
-            <div id="step1">
-                <p>Apakah kamu sedang dalam bahaya?</p>
-                <button id="confirmYes" class="btn btn-danger" style="margin-top:12px;"><i class="fas fa-check-circle"></i> Ya, saya butuh bantuan</button>
-                <button id="confirmNo" class="btn btn-primary" style="margin-top:8px;">Tidak, saya salah tekan</button>
+            <div class="card" style="border: 2px solid rgba(239, 68, 68, 0.25);">
+                <h3>🚨 Ada Masalah/Bahaya?</h3>
+                <p>Pilih mode pelaporan di bawah ini. Jangan takut, identitas dan data kamu 100% aman rahasia bersama kakak Konsultan Hukum & Anak.</p>
+                
+                <button id="triggerEmergency" class="btn btn-danger">
+                    <i class="fas fa-bolt-lightning"></i> TOMBOL DARURAT (SOS)
+                </button>
+                <button id="triggerStandard" class="btn btn-primary">
+                    <i class="fas fa-pen-nib"></i> LAPORAN BIASA / SPILL KEJADIAN
+                </button>
             </div>
-            <div id="step2" style="display:none;">
-                <p><i class="fas fa-map-marker-alt"></i> Mengambil lokasi... <span id="locStatus"></span></p>
-                <div id="mapMini" style="height: 200px; border-radius: 20px; margin: 12px 0;"></div>
-                <div id="kronologiStep" style="display:none;">
-                    <label>Ceritakan apa yang terjadi (bisa tulis atau rekam suara):</label>
-                    <textarea id="kronologiTeks" rows="3" placeholder="Siapa, di mana, kapan?"></textarea>
-                    <div class="audio-controls">
-                        <button id="startRecordBtn" class="btn btn-primary" style="background:#38BDF8;"><i class="fas fa-microphone"></i> Rekam Suara</button>
-                        <button id="stopRecordBtn" class="btn" style="background:#E2E8F0;" disabled><i class="fas fa-stop"></i> Hentikan</button>
+
+            <div class="card" style="background: linear-gradient(to right, #F3E8FF, #FCE7F3); border: none;">
+                <p style="text-align: center; font-weight: 700; color: var(--primary-dark);">
+                    <i class="fas fa-chart-bar"></i> Aktivitas Kamu Hari Ini — Terkirim: <span id="countHariIni">0</span> | Total Log: <span id="countSemua">0</span>
+                </p>
+            </div>
+        </section>
+
+        <section id="panelWizard" class="step-panel">
+            <div class="card">
+                <h3 id="wizardTitle">📂 Alur Prosedur Pengaduan</h3>
+                
+                <div id="subStepLocation">
+                    <p>🗺️ <strong>Langkah 1:</strong> Mengamankan titik koordinat kamu saat ini agar petugas tanggap darurat tepat sasaran.</p>
+                    <div id="locationStatus" style="margin-top:10px; font-weight:700; color:var(--primary-dark);">
+                        <i class="fas fa-spinner fa-spin"></i> Membaca Sensor GPS Perangkat...
                     </div>
-                    <audio id="audioPlayback" controls style="width:100%; margin:8px 0; display:none;"></audio>
-                    <input type="file" id="audioFile" accept="audio/*" style="display:none;">
-                    <button id="simpanLaporanBtn" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Laporan & Kirim ke Petugas</button>
+                    <div id="stepMap"></div>
+                    <button id="btnNextToDetails" class="btn btn-primary" disabled>Lanjut Isi Detail Laporan <i class="fas fa-arrow-right"></i></button>
                 </div>
+
+                <div id="subStepDetails" style="display: none;">
+                    <p>📝 <strong>Langkah 2:</strong> Ceritakan apa yang terjadi. Kamu bisa mengetik teks bebas atau langsung merekam suara biar lebih cepat!</p>
+                    
+                    <textarea id="inputKronologi" rows="4" placeholder="Tulis ceritamu di sini... (Contoh: Siapa, di mana, kapan, atau apa yang kamu alami)"></textarea>
+                    
+                    <div class="audio-wrapper">
+                        <p style="font-size:0.85rem; margin-bottom:8px; font-weight:700;"><i class="fas fa-microphone"></i> Opsi Rekaman Suara:</p>
+                        <div class="audio-actions">
+                            <button id="btnAudioRecord" class="btn btn-primary" style="margin-top:0; font-size:0.85rem; padding:10px;"><i class="fas fa-circle"></i> Mulai Rekam</button>
+                            <button id="btnAudioStop" class="btn btn-secondary" style="margin-top:0; font-size:0.85rem; padding:10px;" disabled><i class="fas fa-stop"></i> Berhenti</button>
+                        </div>
+                        <div class="recording-pulse" id="recordPulse">
+                            <i class="fas fa-circle"></i> Sistem sedang merekam suaramu... Speak up!
+                        </div>
+                        <audio id="audioPreview" controls style="width:100%; margin-top:12px; display:none;"></audio>
+                    </div>
+
+                    <button id="btnSubmitReport" class="btn btn-danger"><i class="fas fa-paper-plane"></i> Kirim & Kunci Dokumen Laporan</button>
+                </div>
+
+                <div id="subStepSuccess" style="display: none;">
+                    <div style="text-align: center; padding: 10px 0;">
+                        <i class="fas fa-circle-check" style="font-size: 3.5rem; color: var(--success);"></i>
+                        <h4 style="margin-top: 14px; font-weight: 800; font-size: 1.2rem;">Laporan Berhasil Di-Spill!</h4>
+                        <p style="margin-top: 6px;">Petugas Komnas Perlindungan Anak & tim Unit Reaksi Cepat Banten sudah memproses laporanmu.</p>
+                    </div>
+
+                    <div class="laporan-box">
+                        <p style="margin-bottom: 6px;">🔑 <strong>Kode Tiket Rahasia:</strong> <span id="txtTicketID" style="font-weight:800; color:var(--primary-dark);"></span></p>
+                        <p>🚦 <strong>Status Respon:</strong> <span class="status-badge badge-received">Diterima Petugas</span></p>
+                    </div>
+
+                    <button id="btnShareWhatsApp" class="btn btn-warning"><i class="fab fa-whatsapp"></i> Teruskan ke HotLine WhatsApp Resmi</button>
+                    <button id="btnResetWizard" class="btn btn-secondary"><i class="fas fa-house"></i> Kembali ke Beranda</button>
+                </div>
+
             </div>
-            <div id="step3" style="display:none;">
-                <p><i class="fas fa-check-circle" style="color:#10B981;"></i> Laporan telah disimpan! Petugas akan segera menindaklanjuti.</p>
-                <p>Nomor Tiket: <strong id="tiketNumber"></strong> | Status: <span class="status-badge" style="background:#FEF3C7;">🟡 Diterima</span></p>
-                <button id="shareWADarurat" class="btn btn-warning"><i class="fab fa-whatsapp"></i> Kirim ke WhatsApp (08111129129)</button>
-                <button id="closePanic" class="btn btn-primary" style="background:#64748B;">Kembali ke Beranda</button>
-            </div>
+            
+            <button id="btnCancelWizard" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Batalkan & Keluar Flow</button>
+        </section>
+
+        <section id="panelLogs" class="card" style="margin-top: 10px;">
+            <h3><i class="fas fa-folder-open"></i> Log Sandbox / Riwayat Laporan Lokal</h3>
+            <p style="margin-bottom: 10px;">Hanya tersimpan di memori browser kamu saat ini (Client-Side Storage):</p>
+            <div id="logContainer" style="max-height: 180px; overflow-y: auto; font-size: 0.85rem;"></div>
+        </section>
+
+        <div class="safe-footer">
+            <a href="https://www.google.com" class="btn-safe-exit" id="quickExit">
+                <i class="fas fa-running"></i> Tombol Samaran (Keluar Cepat)
+            </a>
         </div>
-    </div>
 
-    <!-- EDUKASI -->
-    <div id="edukasiPage" class="page">
-        <div class="card">
-            <h3><i class="fas fa-book-open"></i> Aku Belajar Aman</h3>
-            <div class="comic-card">
-                <h4>📖 Apa itu Bullying?</h4>
-                <p>Bullying adalah tindakan menyakiti orang lain secara sengaja, bisa secara fisik, kata-kata, atau di dunia maya. Kamu berhak melawan!</p>
-            </div>
-            <div class="comic-card">
-                <h4>🕵️ Grooming Online</h4>
-                <p>Hati-hati dengan orang asing yang meminta foto atau data pribadi. Jangan pernah ragu untuk bilang TIDAK dan lapor ke orang dewasa.</p>
-            </div>
-            <div class="comic-card">
-                <h4>📞 Nomor Darurat</h4>
-                <p>Hotline Sahabat Anak: <strong>129</strong> | WhatsApp Komnas: <strong>0811-1129-129</strong></p>
-            </div>
-            <button id="safeExitEdukasi" class="btn btn-primary" style="background:#38BDF8;"><i class="fas fa-arrow-right"></i> Lanjut ke Konten Aman</button>
-        </div>
-    </div>
+    </main>
 
-    <!-- AKUN & DASHBOARD PETUGAS -->
-    <div id="akunPage" class="page">
-        <div class="card">
-            <h3><i class="fas fa-tachometer-alt"></i> Dashboard Petugas / Laporan Masuk</h3>
-            <div id="daftarLaporan" style="max-height: 400px; overflow-y: auto;"></div>
-            <button id="refreshLaporan" class="btn btn-primary" style="margin-top:12px;"><i class="fas fa-sync-alt"></i> Refresh</button>
-        </div>
-        <div class="card">
-            <h3><i class="fas fa-phone-alt"></i> Hubungi Orang Dipercaya</h3>
-            <button id="hubungiOrtu" class="btn btn-primary" style="background:#38BDF8;"><i class="fas fa-user-friends"></i> Hubungi Orang Tua</button>
-            <button id="hubungiGuru" class="btn btn-primary" style="background:#38BDF8;"><i class="fas fa-chalkboard-user"></i> Hubungi Guru</button>
-            <button id="hubungiPolisi" class="btn btn-primary" style="background:#EF4444;"><i class="fas fa-shield-alt"></i> Hubungi Polisi (110)</button>
-        </div>
-    </div>
-</div>
-
-<!-- Safe Exit Button -->
-<div class="safe-exit" id="safeExitBtn">
-    <i class="fas fa-door-open"></i> Keluar Cepat
-</div>
-
-<!-- Bottom Navigation -->
-<div class="bottom-nav">
-    <button class="nav-item active" data-page="beranda"><i class="fas fa-home"></i><span>Beranda</span></button>
-    <button class="nav-item" data-page="peta"><i class="fas fa-map"></i><span>Peta</span></button>
-    <button class="nav-item" data-page="darurat"><i class="fas fa-bell"></i><span>Darurat</span></button>
-    <button class="nav-item" data-page="edukasi"><i class="fas fa-graduation-cap"></i><span>Edukasi</span></button>
-    <button class="nav-item" data-page="akun"><i class="fas fa-user"></i><span>Akun</span></button>
-</div>
-
-<script>
-    // ======================== DATA & GLOBAL ========================
-    let currentLocation = null;
-    let userMarker = null;
-    let map;
-    let miniMap;
-    let mediaRecorder;
-    let audioChunks = [];
-    let audioBlob = null;
-    let laporanList = JSON.parse(localStorage.getItem("laporanAnakBanten")) || [];
-    
-    // Data kab/kota Banten
-    const cities = [
-        { name: "Kota Serang", lat: -6.1188, lng: 106.1502, desk: "Ibu Kota Provinsi" },
-        { name: "Kab. Serang", lat: -6.2580, lng: 106.2190, desk: "Ibukota Ciruas" },
-        { name: "Kota Cilegon", lat: -6.0121, lng: 106.0250, desk: "Kota Cilegon" },
-        { name: "Kab. Pandeglang", lat: -6.3140, lng: 106.1050, desk: "Ibukota Pandeglang" },
-        { name: "Kab. Lebak", lat: -6.5190, lng: 106.2490, desk: "Ibukota Rangkasbitung" },
-        { name: "Kab. Tangerang", lat: -6.2660, lng: 106.4610, desk: "Ibukota Tigaraksa" },
-        { name: "Kota Tangerang", lat: -6.1780, lng: 106.6310, desk: "Kota Tangerang" },
-        { name: "Kota Tangerang Selatan", lat: -6.2830, lng: 106.7170, desk: "Tangsel" }
-    ];
-    
-    // Inisialisasi peta utama (Beranda)
-    function initMainMap() {
-        map = L.map('mapid').setView([-6.3, 106.2], 9.5);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OSM & CartoDB' }).addTo(map);
-        cities.forEach(city => {
-            const icon = L.divIcon({ html: `<div style="background:#A855F7; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border:2px solid white;"><i class="fas fa-city" style="color:white; font-size:12px;"></i></div>`, iconSize: [28,28] });
-            L.marker([city.lat, city.lng], { icon }).addTo(map).bindPopup(`<b>${city.name}</b><br>${city.desk}`);
-        });
-        map.fitBounds(L.latLngBounds(cities.map(c => [c.lat, c.lng])).pad(0.2));
-    }
-    
-    // Mini map di alur darurat
-    function initMiniMap(lat, lng) {
-        if(miniMap) miniMap.remove();
-        miniMap = L.map('mapMini').setView([lat, lng], 13);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(miniMap);
-        L.circleMarker([lat, lng], { color: "#EF4444", fillColor: "#FF4D4D", radius: 12 }).addTo(miniMap).bindPopup("Lokasi Anda");
-    }
-    
-    // Simpan laporan ke localStorage & update dashboard
-    function simpanLaporan(data) {
-        const newLaporan = {
-            id: "BNT-" + Date.now(),
-            waktu: new Date().toLocaleString(),
-            lokasi: data.lokasi || null,
-            kronologi: data.kronologi || "",
-            audioUrl: data.audioUrl || null,
-            status: "Diterima",
-            kategori: data.kategori || "Darurat"
+    <script>
+        // Global State Management
+        let appState = {
+            reportType: 'Biasa', // 'Darurat' atau 'Biasa'
+            coordinates: null,
+            audioBlob: null,
+            mediaRecorder: null,
+            audioChunks: [],
+            database: JSON.parse(localStorage.getItem("db_safe_report")) || []
         };
-        laporanList.unshift(newLaporan);
-        localStorage.setItem("laporanAnakBanten", JSON.stringify(laporanList));
-        updateStatistik();
-        renderDaftarLaporan();
-        return newLaporan.id;
-    }
-    
-    function updateStatistik() {
-        const today = new Date().toDateString();
-        const todayCount = laporanList.filter(l => new Date(l.waktu).toDateString() === today).length;
-        document.getElementById("totalLaporanHariIni").innerText = todayCount;
-        document.getElementById("totalLaporanSemua").innerText = laporanList.length;
-    }
-    
-    function renderDaftarLaporan() {
-        const container = document.getElementById("daftarLaporan");
-        if(!container) return;
-        if(laporanList.length === 0) {
-            container.innerHTML = "<p>Belum ada laporan masuk.</p>";
-            return;
-        }
-        container.innerHTML = laporanList.map(l => `
-            <div class="laporan-item">
-                <strong>🆔 ${l.id}</strong><br>
-                🕒 ${l.waktu}<br>
-                📍 ${l.lokasi ? l.lokasi.lat+','+l.lokasi.lng : 'Tidak ada GPS'}<br>
-                📝 ${l.kronologi.substring(0,80)}...<br>
-                <span class="status-badge" style="background:#E0E7FF;">${l.status}</span>
-                ${l.audioUrl ? `<br><audio controls src="${l.audioUrl}" style="width:100%; margin-top:6px;"></audio>` : ''}
-            </div>
-        `).join('');
-    }
-    
-    // Rekam suara
-    async function startRecording() {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
-        audioChunks = [];
-        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-        mediaRecorder.onstop = () => {
-            audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-            const audioUrl = URL.createObjectURL(audioBlob);
-            const audioPlayer = document.getElementById("audioPlayback");
-            audioPlayer.src = audioUrl;
-            audioPlayer.style.display = "block";
-            document.getElementById("stopRecordBtn").disabled = false;
-            document.getElementById("startRecordBtn").disabled = true;
-        };
-        mediaRecorder.start();
-        document.getElementById("startRecordBtn").disabled = true;
-        document.getElementById("stopRecordBtn").disabled = false;
-    }
-    function stopRecording() {
-        if(mediaRecorder && mediaRecorder.state !== "inactive") {
-            mediaRecorder.stop();
-            mediaRecorder.stream.getTracks().forEach(track => track.stop());
-            document.getElementById("stopRecordBtn").disabled = true;
-        }
-    }
-    
-    // ======================== ALUR PANIC BUTTON ========================
-    async function ambilLokasi() {
-        return new Promise((resolve, reject) => {
-            if(!navigator.geolocation) reject("GPS tidak didukung");
-            navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 10000 });
+
+        // UI References
+        let mainMapInstance = null;
+        let stepMapInstance = null;
+        let stepMapMarker = null;
+
+        // Data Mock Lokasi Banten
+        const bantenRegencies = [
+            { name: "Kota Serang", lat: -6.1188, lng: 106.1502, telp: "0254-XXXXXX" },
+            { name: "Kab. Serang", lat: -6.2580, lng: 106.2190, telp: "0254-XXXXXX" },
+            { name: "Kota Cilegon", lat: -6.0121, lng: 106.0250, telp: "0254-XXXXXX" },
+            { name: "Kab. Pandeglang", lat: -6.3140, lng: 106.1050, telp: "0254-XXXXXX" },
+            { name: "Kab. Lebak", lat: -6.5190, lng: 106.2490, telp: "0252-XXXXXX" },
+            { name: "Kab. Tangerang", lat: -6.2660, lng: 106.4610, telp: "021-XXXXXXX" },
+            { name: "Kota Tangerang", lat: -6.1780, lng: 106.6310, telp: "021-XXXXXXX" },
+            { name: "Kota Tangsel", lat: -6.2830, lng: 106.7170, telp: "021-XXXXXXX" }
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initMainMap();
+            refreshStatistics();
+            attachEventListeners();
         });
-    }
-    
-    // Tampilkan titik merah di peta utama jika lokasi ada
-    function showRedMarker(lat, lng) {
-        if(userMarker) map.removeLayer(userMarker);
-        userMarker = L.circleMarker([lat, lng], { color: "#EF4444", fillColor: "#FF4D4D", fillOpacity: 0.9, radius: 16, weight: 3 }).addTo(map);
-        userMarker.bindPopup("🚨 Lokasi darurat Anda").openPopup();
-        map.flyTo([lat, lng], 14);
-    }
-    
-    // Navigasi antar halaman
-    function switchPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId + "Page").classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(btn => {
-            btn.classList.remove('active');
-            if(btn.getAttribute('data-page') === pageId) btn.classList.add('active');
-        });
-        if(pageId === 'beranda' && map) setTimeout(() => map.invalidateSize(), 100);
-        if(pageId === 'akun') renderDaftarLaporan();
-    }
-    
-    // Safe exit: buka halaman netral (contoh google)
-    document.getElementById("safeExitBtn").addEventListener("click", () => {
-        window.location.href = "https://www.google.com";
-    });
-    document.getElementById("safeExitEdukasi")?.addEventListener("click", () => {
-        window.open("https://www.google.com", "_blank");
-    });
-    
-    // ======================== EVENT LISTENER ========================
-    // Panic button dari beranda
-    document.getElementById("panicBtn").addEventListener("click", () => {
-        switchPage("darurat");
-        document.getElementById("step1").style.display = "block";
-        document.getElementById("step2").style.display = "none";
-        document.getElementById("step3").style.display = "none";
-        document.getElementById("kronologiStep").style.display = "none";
-    });
-    
-    document.getElementById("confirmYes").addEventListener("click", async () => {
-        document.getElementById("step1").style.display = "none";
-        document.getElementById("step2").style.display = "block";
-        document.getElementById("locStatus").innerText = "Mengambil GPS...";
-        try {
-            const pos = await ambilLokasi();
-            const { latitude, longitude } = pos.coords;
-            currentLocation = { lat: latitude, lng: longitude };
-            document.getElementById("locStatus").innerHTML = "✅ Lokasi ditemukan!";
-            // tampilkan mini map dan titik merah di peta utama
-            initMiniMap(latitude, longitude);
-            showRedMarker(latitude, longitude);
-            document.getElementById("kronologiStep").style.display = "block";
-        } catch(err) {
-            alert("Gagal ambil lokasi. Pastikan GPS aktif.");
-            document.getElementById("step2").style.display = "none";
-            document.getElementById("step1").style.display = "block";
+
+        // Initialize Main Leaflet Map
+        function initMainMap() {
+            mainMapInstance = L.map('mainMap').setView([-6.3, 106.3], 9);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(mainMapInstance);
+
+            bantenRegencies.forEach(item => {
+                const customIcon = L.divIcon({
+                    html: `<div style="background:#A855F7; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 2px 6px rgba(0,0,0,0.2);"><i class="fas fa-building-shield" style="color:white; font-size:10px;"></i></div>`,
+                    className: '',
+                    iconSize: [24, 24]
+                });
+                L.marker([item.lat, item.lng], { icon: customIcon })
+                 .addTo(mainMapInstance)
+                 .bindPopup(`<strong>Posko ${item.name}</strong><br>Status: Siaga Terbuka<br>Hubungi: ${item.telp}`);
+            });
         }
-    });
-    
-    document.getElementById("confirmNo").addEventListener("click", () => {
-        switchPage("beranda");
-    });
-    
-    // Rekam suara
-    document.getElementById("startRecordBtn").addEventListener("click", startRecording);
-    document.getElementById("stopRecordBtn").addEventListener("click", stopRecording);
-    
-    // Simpan laporan darurat
-    document.getElementById("simpanLaporanBtn").addEventListener("click", async () => {
-        const kronologi = document.getElementById("kronologiTeks").value;
-        if(!kronologi && !audioBlob) {
-            alert("Silakan tulis cerita atau rekam suara terlebih dahulu.");
-            return;
+
+        // Initialize Step Stepper Map Dynamic
+        function initStepMap(lat, lng) {
+            if (stepMapInstance) {
+                stepMapInstance.remove();
+            }
+            stepMapInstance = L.map('stepMap').setView([lat, lng], 14);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(stepMapInstance);
+            
+            stepMapMarker = L.circleMarker([lat, lng], {
+                color: '#EF4444',
+                fillColor: '#FF6B6B',
+                fillOpacity: 0.7,
+                radius: 12
+            }).addTo(stepMapInstance).bindPopup("Lokasi Kamu Terkunci").openPopup();
         }
-        let audioUrl = null;
-        if(audioBlob) {
-            audioUrl = URL.createObjectURL(audioBlob);
+
+        // Stepper Navigation Management
+        function openWizardFlow(type) {
+            appState.reportType = type;
+            document.getElementById('panelHome').classList.remove('active');
+            document.getElementById('panelWizard').classList.add('active');
+            
+            // Format tema wizard berdasarkan tingkat urgensi
+            if(type === 'Darurat') {
+                document.getElementById('wizardTitle').innerHTML = `🚨 MODE DARURAT SOS AKTIF`;
+                document.getElementById('btnSubmitReport').className = "btn btn-danger";
+            } else {
+                document.getElementById('wizardTitle').innerHTML = `📝 MODE PENGADUAN STANDAR`;
+                document.getElementById('btnSubmitReport').className = "btn btn-primary";
+            }
+
+            // Jalankan Trigger Pencarian Lokasi Otomatis
+            requestGeolocation();
         }
-        const laporanData = {
-            lokasi: currentLocation,
-            kronologi: kronologi,
-            audioUrl: audioUrl,
-            kategori: "Darurat"
-        };
-        const ticketId = simpanLaporan(laporanData);
-        document.getElementById("tiketNumber").innerText = ticketId;
-        document.getElementById("step2").style.display = "none";
-        document.getElementById("step3").style.display = "block";
-        
-        // notifikasi ke dashboard petugas (simulasi)
-        console.log("Laporan baru masuk ke dashboard petugas:", laporanData);
-    });
-    
-    // Share WA dari darurat
-    document.getElementById("shareWADarurat").addEventListener("click", () => {
-        if(!currentLocation) return;
-        const waNumber = "628111129129";
-        let message = `🚨 *PETA PERLINDUNGAN ANAK BANTEN - LAPORAN DARURAT* 🚨\n\n📍 Lokasi: https://maps.google.com/?q=${currentLocation.lat},${currentLocation.lng}\n📝 Kronologi: ${document.getElementById("kronologiTeks").value || "Tidak diisi"}\n🕒 Waktu: ${new Date().toLocaleString()}\n\nMohon segera ditindaklanjuti. #SahabatAnakBanten`;
-        window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
-    });
-    document.getElementById("closePanic").addEventListener("click", () => switchPage("beranda"));
-    
-    // Laporan biasa
-    document.getElementById("laporanBiasaBtn").addEventListener("click", () => {
-        const kronologi = prompt("Silakan tulis kronologi kejadian (biasa):");
-        if(kronologi) {
-            simpanLaporan({ lokasi: null, kronologi: kronologi, audioUrl: null, kategori: "Biasa" });
-            alert("Laporan biasa telah disimpan. Terima kasih.");
+
+        function closeWizardFlow() {
+            document.getElementById('panelWizard').classList.remove('active');
+            document.getElementById('panelHome').classList.add('active');
+            resetWizardInputs();
+            setTimeout(() => { mainMapInstance.invalidateSize(); }, 200);
         }
-    });
-    
-    // Hubungi orang terpercaya
-    document.getElementById("hubungiOrtu").addEventListener("click", () => {
-        alert("Fitur ini membutuhkan kontak orang tua yang disimpan. Sementara hubungi via telepon langsung.");
-    });
-    document.getElementById("hubungiGuru").addEventListener("click", () => {
-        alert("Hubungi guru BK sekolah Anda.");
-    });
-    document.getElementById("hubungiPolisi").addEventListener("click", () => {
-        window.open("tel:110");
-    });
-    
-    // Refresh dashboard
-    document.getElementById("refreshLaporan").addEventListener("click", renderDaftarLaporan);
-    
-    // Bottom navigation
-    document.querySelectorAll(".nav-item").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const page = btn.getAttribute("data-page");
-            switchPage(page);
-        });
-    });
-    
-    // Inisialisasi
-    initMainMap();
-    updateStatistik();
-    renderDaftarLaporan();
-</script>
+
+        // Web API Geolocation Handler
+        function requestGeolocation() {
+            const statusLabel = document.getElementById('locationStatus');
+            const nextBtn = document.getElementById('btnNextToDetails');
+
+            if (!navigator.geolocation) {
+                statusLabel.innerHTML = "❌ Browser kamu tidak mendukung pencarian GPS.";
+                useFallbackLocation();
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    appState.coordinates = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    statusLabel.innerHTML = `✅ Validasi GPS Selesai! Titik Akurat Terkunci.`;
+                    initStepMap(appState.coordinates.lat, appState.coordinates.lng);
+                    nextBtn.disabled = false;
+                },
+                (error) => {
+                    console.warn("GPS error, executing fallback layout:", error);
+                    statusLabel.innerHTML = `⚠️ Gagal membaca GPS otomatis. Memakai backup pusat Banten.`;
+                    useFallbackLocation();
+                },
+                { enableHighAccuracy: true, timeout: 8000 }
+            );
+        }
+
+        function useFallbackLocation() {
+            appState.coordinates = { lat: -6.1188, lng: 106.1502 }; // Default Kota Serang
+            initStepMap(appState.coordinates.lat, appState.coordinates.lng);
+            document.getElementById('btnNextToDetails').disabled = false;
+        }
+
+        // Web Audio API Audio Capturing Logic
+        async function startAudioRecording() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                alert("Perangkat tidak mendukung atau izin mic ditolak.");
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                appState.mediaRecorder = new MediaRecorder(stream);
+                appState.audioChunks = [];
+
+                appState.mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) appState.audioChunks.push(e.data);
+                };
+
+                appState.mediaRecorder.onstop = () => {
+                    appState.audioBlob = new Blob(appState.audioChunks, { type: 'audio/mp3' });
+                    const audioUrl = URL.createObjectURL(appState.audioBlob);
+                    const player = document.getElementById('audioPreview');
+                    player.src = audioUrl;
+                    player.style.display = 'block';
+                };
+
+                appState.mediaRecorder.start();
+                document.getElementById('btnAudioRecord').disabled = true;
+                document.getElementById('btnAudioStop').disabled = false;
+                document.getElementById('recordPulse').style.display = 'flex';
+            } catch (err) {
+                console.error("Izin audio bermasalah:", err);
+                alert("Gagal mengakses mikrofon.");
+            }
+        }
+
+        function stopAudioRecording() {
+            if (appState.mediaRecorder && appState.mediaRecorder.state !== 'inactive') {
+                appState.mediaRecorder.stop();
+                appState.mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                document.getElementById('btnAudioRecord').disabled = false;
+                document.getElementById('btnAudioStop').disabled = true;
+                document.getElementById('recordPulse').style.display = 'none';
+            }
+        }
+
+        // Database & Saving Action
+        function commitReportToLocalDB() {
+            const txtArea = document.getElementById('inputKronologi').value.trim();
+            if (!txtArea && !appState.audioBlob) {
+                alert("Silakan ketik atau isi suara rekaman terlebih dahulu ya dek.");
+                return;
+            }
+
+            const uniqueTicket = "BNT-" + Math.floor(100000 + Math.random() * 900000);
+            const currentDate = new Date();
+
+            const reportPayload = {
+                id: uniqueTicket,
+                timestamp: currentDate.toLocaleString('id-ID'),
+                rawTimestamp: currentDate.toISOString(),
+                type: appState.reportType,
+                coordinates: appState.coordinates,
+                textData: txtArea || "(Laporan Berupa Audio)",
+                hasAudio: appState.audioBlob ? true : false
+            };
+
+            appState.database.unshift(reportPayload);
+            localStorage.setItem("db_safe_report", JSON.stringify(appState.database));
+
+            // Transisi Sub-Step Akhir (Berhasil)
+            document.getElementById('subStepDetails').style.display = 'none';
+            document.getElementById('subStepSuccess').style.display = 'block';
+            document.getElementById('txtTicketID').innerText = uniqueTicket;
+
+            refreshStatistics();
+        }
+
+        // Render Panel Log Data Kebutuhan Github & Review Proyek
+        function refreshStatistics() {
+            const container = document.getElementById('logContainer');
+            const listData = appState.database;
+            
+            // Hitung statistik hari ini
+            const todayStr = new Date().toDateString();
+            const filteredToday = listData.filter(x => new Date(x.rawTimestamp || Date.now()).toDateString() === todayStr);
+
+            document.getElementById('countHariIni').innerText = filteredToday.length;
+            document.getElementById('countSemua').innerText = listData.length;
+
+            if (listData.length === 0) {
+                container.innerHTML = `<p style="color:#9CA3AF; font-style:italic;">Belum ada antrean laporan lokal.</p>`;
+                return;
+            }
+
+            container.innerHTML = listData.map(node => `
+                <div style="border-bottom: 1px dashed #E5E7EB; padding: 8px 0;">
+                    <strong>📌 ${node.id} [${node.type}]</strong> — <span style="color:var(--text-muted); font-size:11px;">${node.timestamp}</span><br>
+                    <span style="display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:100%;">
+                        📝 ${node.textData}
+                    </span>
+                    <span style="font-size:11px; color:var(--primary);">📍 GPS: ${node.coordinates ? node.coordinates.lat.toFixed(4) + ',' + node.coordinates.lng.toFixed(4) : 'Default Banten'}</span>
+                </div>
+            `).join('');
+        }
+
+        function resetWizardInputs() {
+            document.getElementById('subStepLocation').style.display = 'block';
+            document.getElementById('subStepDetails').style.display = 'none';
+            document.getElementById('subStepSuccess').style.display = 'none';
+            document.getElementById('btnNextToDetails').disabled = true;
+            document.getElementById('inputKronologi').value = '';
+            document.getElementById('audioPreview').style.display = 'none';
+            document.getElementById('audioPreview').src = '';
+            appState.audioBlob = null;
+            appState.coordinates = null;
+        }
+
+        // Bridge Social Handoff WhatsApp API
+        function fireWhatsAppAPI() {
+            const ticket = document.getElementById('txtTicketID').innerText;
+            const textStory = document.getElementById('inputKronologi').value || "Bukti rekaman terlampir di sistem.";
+            const mapsURL = appState.coordinates ? `https://maps.google.com/?q=${appState.coordinates.lat},${appState.coordinates.lng}` : 'Lokasi Terproteksi';
+            
+            const waNumber = "628111129129"; // Nomor Pengaduan Resmi Banten
+            const formatText = `🚨 *SAFE SPACE REPORT (KID PROTECTION BANTEN)* 🚨\n\n` +
+                               `🔑 *KODE TIKET:* ${ticket}\n` +
+                               `📊 *URGENSI:* Laporan ${appState.reportType}\n` +
+                               `📍 *LOKASI TKP:* ${mapsURL}\n` +
+                               `📝 *CRONOLOGY / SPILL:* ${textStory}\n\n` +
+                               `#SahabatAnakBanten - Segera Amankan Posisi Korban Sekarang!`;
+
+            window.open(`https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(formatText)}`, '_blank');
+        }
+
+        // Declarative Event Listeners Binding
+        function attachEventListeners() {
+            document.getElementById('triggerEmergency').addEventListener('click', () => openWizardFlow('Darurat'));
+            document.getElementById('triggerStandard').addEventListener('click', () => openWizardFlow('Biasa'));
+            document.getElementById('btnCancelWizard').addEventListener('click', closeWizardFlow);
+            document.getElementById('btnResetWizard').addEventListener('click', closeWizardFlow);
+            
+            document.getElementById('btnNextToDetails').addEventListener('click', () => {
+                document.getElementById('subStepLocation').style.display = 'none';
+                document.getElementById('subStepDetails').style.display = 'block';
+            });
+
+            document.getElementById('btnAudioRecord').addEventListener('click', startAudioRecording);
+            document.getElementById('btnAudioStop').addEventListener('click', stopAudioRecording);
+            document.getElementById('btnSubmitReport').addEventListener('click', commitReportToLocalDB);
+            document.getElementById('btnShareWhatsApp').addEventListener('click', fireWhatsAppAPI);
+
+            // Tombol Samaran Instan (Anti-Panic Key / Safe Exit)
+            document.getElementById('quickExit').addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.replace("https://www.google.com");
+            });
+        }
+    </script>
 </body>
 </html>
